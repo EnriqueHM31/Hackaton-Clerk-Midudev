@@ -3,6 +3,7 @@ import cors from 'cors';
 
 import usuariosRoutes from './routes/usuarios.js';
 import rolesRoutes from './routes/roles.js';
+import hackatonesRoutes from './routes/hackatones.js';
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 // Rutas API
 app.use('/api/users', usuariosRoutes);
 app.use('/api/roles', rolesRoutes);
+app.use('/api/hackatones', hackatonesRoutes);
 
 
 const PORT = process.env.PORT || 3000;

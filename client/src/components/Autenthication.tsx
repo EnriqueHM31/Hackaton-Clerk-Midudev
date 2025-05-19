@@ -17,10 +17,7 @@ export default function AuthRolContenido() {
 
         if (roleFromMetadata) {
             setShowModal(false);
-            setShowWelcomeModal(true);
             return;
-        } else {
-            setShowModal(true);
         }
 
         const handleAuthFlow = async () => {

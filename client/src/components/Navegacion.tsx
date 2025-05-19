@@ -1,7 +1,7 @@
-'use client';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import BotonPerfil from './BotonPerfil';
+import { useUser } from '@clerk/clerk-react';
 
 const LINKS = [
     { texto: 'Home', url: '/' },
@@ -10,12 +10,12 @@ const LINKS = [
     { texto: 'Contacto', url: '/#contacto' },
 ];
 
-function LinksPorRol({ role }: { role?: string }) {
+function LinksPorRol({ role }: { role?: string | null }) {
     if (role === 'organizador') {
         return (
             <Link
                 className="text-xl hover:text-primary transition-colors z-50 font-bold"
-                to="/organizador/panel"
+                to="/panel"
             >
                 Panel
             </Link>
@@ -26,7 +26,7 @@ function LinksPorRol({ role }: { role?: string }) {
         return (
             <Link
                 className="text-xl hover:text-primary transition-colors z-50 font-bold"
-                to="/participantes/hackatones"
+                to="/hackatones"
             >
                 Hackatones
             </Link>
@@ -39,6 +39,8 @@ function LinksPorRol({ role }: { role?: string }) {
 export default function Navegacion() {
 
     const { user } = useUser();
+
+    const role = user?.publicMetadata?.role as string | null;
 
 
     // Menú responsive
@@ -85,8 +87,6 @@ export default function Navegacion() {
     return (
         <>
 
-
-
             <header
                 className="w-full sticky top-0 z-100 backdrop-blur-sm xl:px-0 px-6 xl:py-3 py-2"
                 id="inicio"
@@ -126,7 +126,7 @@ export default function Navegacion() {
                             </a>
                         ))}
 
-                        <LinksPorRol role={"hola"} />
+                        <LinksPorRol role={role} />
                     </nav>
 
                     {/* Botón de Perfil */}

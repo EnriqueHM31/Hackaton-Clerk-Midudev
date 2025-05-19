@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { lenguajesSelect } from '../../assets/js/constantes';
+import { lenguajesSelect } from '../assets/js/constantes.js';
 import toast from 'react-hot-toast';
 
 interface Hackaton {
@@ -19,27 +19,29 @@ interface hackatonActive {
     idHack: number;
 }
 
-export default function HackatonesList({ hackatones = [] }: { hackatones?: Hackaton[] }) {
+export default function HackatonesList() {
     const [visibleCount, setVisibleCount] = useState(6);
     const [filtrar, setFiltrar] = useState<string>('');
     const [isLoading, setIsLoading] = useState(true);
     const [activo, setActivo] = useState([] as hackatonActive[]);
+    const [hackatones, setHackatones] = useState([] as Hackaton[]);
 
     useEffect(() => {
         // Simular carga de datos
-        const fetchGanadores = async () => {
+        const fetchHackatones = async () => {
             try {
-                const res = await fetch(`/api/ganadoresHackAll`);
+                const res = await fetch(`http://localhost:3000/api/hackatones/all`);
                 const data = await res.json();
 
                 if (res.ok && Array.isArray(data) && data.length > 0) {
-                    setActivo(data);
+                    setHackatones(data);
                 }
             } catch (error) {
+                console.error(error);
                 toast.error('Error al obtener ganadores existentes');
             }
         };
-        fetchGanadores();
+        fetchHackatones();
 
         const timer = setTimeout(() => setIsLoading(false), 500);
         return () => clearTimeout(timer);
@@ -49,6 +51,7 @@ export default function HackatonesList({ hackatones = [] }: { hackatones?: Hacka
     // Protección contra datos nulos/undefined
 
     // Filtrar hackatones según lenguaje
+    console.log(hackatones);
     const hackatonesFiltrados = filtrar !== '' ? hackatones.filter((h) => h.lenguajes?.includes(filtrar)) : hackatones;
 
     // Hackatones que se van a renderizar según visibleCount
@@ -71,7 +74,7 @@ export default function HackatonesList({ hackatones = [] }: { hackatones?: Hacka
 
     if (isLoading) {
         return (
-            <div className="col-span-4 row-span-4 flex items-center justify-center">
+            <div className="col-span-4 row-span-4 flex items-center justify-center h-full">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
             </div>
         );
@@ -101,7 +104,7 @@ export default function HackatonesList({ hackatones = [] }: { hackatones?: Hacka
                                 setVisibleCount(hackatones.length);
                             }}
                         >
-                            {lenguajesSelect.map((lenguaje) => (
+                            {lenguajesSelect.map((lenguaje: { value: string; label: string }) => (
                                 <option key={lenguaje.value} value={lenguaje.value}>
                                     {lenguaje.label}
                                 </option>
@@ -121,7 +124,7 @@ export default function HackatonesList({ hackatones = [] }: { hackatones?: Hacka
                         < div className="col-span-4 row-span-4 flex items-center justify-center">
                             <p className="text-white text-4xl font-bold bg-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-400 to-secondary">
                                 {filtrar
-                                    ? `No hay hackatones con el lenguaje ${lenguajesSelect.find((l) => l.value === filtrar)?.label || filtrar
+                                    ? `No hay hackatones con el lenguaje ${lenguajesSelect.find((l: { value: string; label: string; }) => l.value === filtrar)?.label || filtrar
                                     }`
                                     : 'No hay hackatones para mostrar.'}
                             </p>
