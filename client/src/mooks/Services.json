@@ -1,0 +1,22 @@
+{
+    "Services_List": [
+        {
+            "id": 0,
+            "titulo": "Organización de Hackathons Personalizados",
+            "emoji": "🚀",
+            "descripcion": "Creamos y gestionamos hackathons virtuales adaptados a tus objetivos. Desde la temática hasta la evaluación, DevArena proporciona una plataforma completa para que empresas, universidades o comunidades tecnológicas lancen sus propios retos y descubran talento real."
+        },
+        {
+            "id": 1,
+            "titulo": "Participación en Eventos Abiertos",
+            "emoji": "👨‍💻",
+            "descripcion": "Compite en hackathons temáticos, gana premios y fortalece tu portafolio. Desarrolladores de todos los niveles pueden registrarse y participar en competencias abiertas organizadas por DevArena y sus aliados."
+        },
+        {
+            "id": 2,
+            "titulo": "Crecimiento Profesional y Networking",
+            "emoji": "🌱",
+            "descripcion": "Impulsa tu carrera conectando con mentores, empresas y otros desarrolladores. DevArena te brinda acceso a una comunidad activa, oportunidades de colaboración y visibilidad ante reclutadores del sector tecnológico."
+        }
+    ]
+}

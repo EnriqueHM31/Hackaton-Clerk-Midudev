@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #48e;
+  --container-laptop: 1300px;
+}
+
+.circulo {
+  border-radius: 100%;
+  width: clamp(12rem, 20vw, 16rem);
+  height: clamp(12rem, 20vw, 16rem);
+  filter: blur(200px);
+  pointer-events: none;
+  animation: flotar 1s infinite both alternate;
+}
+
+@keyframes flotar {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-30px);
+  }
+}
+
+.grid_hackatones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 2rem;
+}
+
+/* styles.css o en tu <style> */
+@keyframes Card {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+    scale: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    scale: 1;
+  }
+}
+
+.card-animada {
+  view-timeline: --animationcard;
+  view-timeline-axis: block;
+  animation-timeline: --animationcard;
+  animation-name: Card;
+  animation-fill-mode: both;
+  animation-range: entry 20% cover 45%;
+  z-index: 80;
+}
