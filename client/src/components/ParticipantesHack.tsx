@@ -27,6 +27,12 @@ type Hackaton = {
     premios: string[];
 };
 
+type Ganador = {
+    id: number;
+    participanteid: string;
+    lugar: number;
+};
+
 type Props = {
     idHack: string;
 };
@@ -40,10 +46,10 @@ export default function ParticipantesHackaton({ idHack }: Props) {
     const [loading, setLoading] = useState(true);
     const [selected, setSelected] = useState<Participante | null>(null);
     const [ganadores, setGanadores] = useState<{ lugar: number; participante: Participante }[]>([]);
-    const [ganadoresBD, setGanadoresBD] = useState<{ lugar: number; participante: string }[]>([]);
     const [modalConfirm, setModalConfirm] = useState<{ participante: Participante; lugar: number } | null>(null);
     const [ganadoresLoading, setGanadoresLoading] = useState(false);
     const [hackaton, setHackaton] = useState<Hackaton | null>(null);
+    const [ganadoresExisten, setGanadoresExisten] = useState<Ganador[]>([]);
 
 
 
@@ -55,7 +61,7 @@ export default function ParticipantesHackaton({ idHack }: Props) {
                 const [resHackaton, resParticipantes, resGanadores] = await Promise.all([
                     fetch(`http://localhost:3000/api/hackatones/hackaton/${idHack}`),
                     fetch(`http://localhost:3000/api/hackatones/participaciones/${idHack}`),
-                    fetch(`http://localhost:3000/api/hackatones/hackaton/${idHack}`)
+                    fetch(`http://localhost:3000/api/hackatones/ganadores/${idHack}`)
                 ]);
 
                 const [dataHackaton, dataParticipantes, dataGanadores] = await Promise.all([
@@ -67,14 +73,20 @@ export default function ParticipantesHackaton({ idHack }: Props) {
                 if (!resHackaton.ok) toast.error(dataHackaton.error || 'Error al obtener datos del hackatón');
                 else setHackaton(dataHackaton);
 
-                if (!resParticipantes.ok) toast.error(dataParticipantes.error || 'Error al obtener participantes');
+                if (!resParticipantes.ok) toast.error(dataParticipantes.error || 'Error al obtener datos del hackatón');
                 else setParticipantes(dataParticipantes);
 
-                if (!resGanadores.ok) toast.error(dataGanadores.error || 'Error al obtener ganadores existentes');
+                if (!resGanadores.ok) toast.error(dataGanadores.error || 'Error al obtener datos del hackatón');
                 else {
-                    setGanadoresBD(dataGanadores);
-                    setGanadoresLoading(true);
+                    if (dataGanadores.ganadores.length > 0) {
+                        setGanadoresExisten(dataGanadores.ganadores);
+                        setGanadoresLoading(true)
+                    } else {
+                        setGanadoresExisten([]);
+                        setGanadoresLoading(false);
+                    }
                 }
+
 
             } catch (error) {
                 console.error('Error al conectar con el servidor:', error);
@@ -182,13 +194,14 @@ export default function ParticipantesHackaton({ idHack }: Props) {
         };
 
         try {
-            const res = await fetch('/api/ganadores', {
+            const res = await fetch(`http://localhost:3000/api/hackatones/ganadores/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(payload),
             });
+
 
             const data = await res.json();
 
@@ -210,9 +223,25 @@ export default function ParticipantesHackaton({ idHack }: Props) {
     if (participantes.length === 0)
         return <p className="text-gray-300 text-2xl font-bold w-full text-center mt-6">No hay participantes inscritos aún.</p>;
 
-    console.log(hackaton);
-    console.log(participantes);
-    console.log(ganadores);
+    console.log(ganadoresLoading);
+    console.log(ganadoresExisten);
+
+    function existenGanadores(p: Participante) {
+        console.log("ganadoresLoading:", ganadoresLoading);
+        console.log("p.user_id:", p.user_id);
+        console.log("ganadoresExisten:", ganadoresExisten);
+
+        if (!ganadoresLoading) return null;
+
+        const ganador = ganadoresLoading
+            ? ganadoresExisten.find((g: Ganador) => g.participanteid === p.user_id)
+            : null;
+
+
+        console.log("ganador encontrado:", ganador);
+        return ganador;
+    }
+
 
     return (
         <>
@@ -223,9 +252,7 @@ export default function ParticipantesHackaton({ idHack }: Props) {
                 <ul className="grid grid-cols-2 gap-x-6 gap-y-4 w-full mx-auto">
                     {visibles.map((p) => {
                         // Solo si ya cargaron ganadores, verificamos si este participante es ganador
-                        const ganadorEncontrado = ganadoresLoading
-                            ? ganadoresBD.find((g) => g.participante === p.user_id)
-                            : null;
+                        const ganadorEncontrado = existenGanadores(p);
 
 
                         const lugar = ganadorEncontrado ? ganadorEncontrado.lugar : getLugarParticipante(p.user_id);

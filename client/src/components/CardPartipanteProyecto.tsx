@@ -89,7 +89,7 @@ export default function CardPartipanteProyecto({ selected, setSelected, formatea
                                 rel="noopener noreferrer"
                                 className="relative inline-block px-1 before:absolute before:-inset-0.5 before:block before:rounded before:bg-blue-500/10"
                             >
-                                <span className="text-2xl relative text-blue-400 hover:text-white">&nbsp;&nbsp;&nbsp;{selected.github_perfil}</span>
+                                <span className="text-2xl relative text-blue-400 hover:text-white break-words break-all">&nbsp;&nbsp;&nbsp;{selected.github_perfil}</span>
                             </a><br />
                             <span className="text-2xl text-slate-500">&nbsp;&lt;/</span>
                             <span className="text-2xl text-pink-400">GitHub</span>
@@ -106,7 +106,7 @@ export default function CardPartipanteProyecto({ selected, setSelected, formatea
                                 rel="noopener noreferrer"
                                 className="relative inline-block px-1 before:absolute before:-inset-0.5 before:block before:rounded before:bg-blue-500/10"
                             >
-                                <span className="text-2xl relative text-blue-400 hover:text-white">&nbsp;&nbsp;&nbsp;{selected.github_perfil}</span>
+                                <span className="text-2xl relative text-blue-400 hover:text-white break-words break-all">&nbsp;&nbsp;&nbsp;{selected.github_perfil}</span>
                             </a><br />
                             <span className="text-2xl text-slate-500">&nbsp;&lt;/</span>
                             <span className="text-2xl text-pink-400">Repositorio</span>

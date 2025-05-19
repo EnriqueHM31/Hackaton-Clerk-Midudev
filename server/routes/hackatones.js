@@ -243,4 +243,39 @@ router.get('/autor', async (req, res) => {
     }
 });
 
+
+router.post('/ganadores/register', async (req, res) => {
+    const { idHack, ganadores } = req.body;
+
+    if (!idHack || !Array.isArray(ganadores) || ganadores.length === 0) {
+        return res.status(400).json({ error: 'Datos incompletos o inválidos' });
+    }
+
+    try {
+        // Aquí no manejamos BEGIN/COMMIT porque no tenemos cliente directo.
+        // Si quieres transacciones, tendrías que modificar la función query o usar cliente.
+
+        for (const { participanteId, lugar } of ganadores) {
+            if (!participanteId || !lugar) {
+                return res.status(400).json({ error: 'Faltan datos de un ganador' });
+            }
+
+            await query(
+                `INSERT INTO ganadores (idHack, participanteId, lugar)
+         VALUES ($1, $2, $3)
+         ON CONFLICT (idHack, lugar) DO UPDATE SET participanteId = EXCLUDED.participanteId`,
+                [idHack, participanteId, lugar]
+            );
+        }
+
+        res.status(201).json({ message: 'Ganadores registrados correctamente' });
+
+    } catch (error) {
+        console.error('Error al registrar ganadores:', error);
+        res.status(500).json({ error: 'Error al registrar ganadores: ' + error.message });
+    }
+});
+
 export default router;
+
+

@@ -3,7 +3,7 @@ import React, { useState, useMemo } from 'react';
 import PreviewCard from './CarPrev';
 import ModalLenguajes from './ModalLenguajes';
 import ModalPremios from './ModalPremios';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useUser } from '@clerk/clerk-react';
 /*
 interface Participacion {
@@ -374,7 +374,7 @@ export default function HackathonForm() {
                         setPremios={setPremios}
                     />
                 )}
-                <Toaster position="bottom-center" toastOptions={{ removeDelay: 3000, style: { background: 'rgb(0,0,0)', fontSize: '1.1rem', color: '#fff', borderColor: '#48e', borderRadius: '20px', borderWidth: '3px', padding: '10px 20px' } }} />
+
             </div>
         </>
     );

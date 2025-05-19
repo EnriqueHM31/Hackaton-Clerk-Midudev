@@ -1,5 +1,4 @@
 import ContactForm from './ContactoForm';
-import { Toaster } from 'react-hot-toast';
 export default function Contacto() {
     return (
 
@@ -22,21 +21,6 @@ export default function Contacto() {
             <div className="flex-1 relative items-center justify-center xl:flex hidden" data-aos="fade-left" data-aos-delay="100">
                 <img src="/src/assets/Contact.webp" className="w-full h-auto" alt="Imagen de fondo" loading="lazy" />
             </div>
-            <Toaster
-                position="bottom-center"
-                toastOptions={{
-                    removeDelay: 3000,
-                    style: {
-                        background: 'rgb(0,0,0)',
-                        fontSize: '1.1rem',
-                        color: '#fff',
-                        borderColor: '#48e',
-                        borderRadius: '20px',
-                        borderWidth: '3px',
-                        padding: '10px 20px',
-                    },
-                }}
-            />
         </section>
 
 

@@ -1,6 +1,5 @@
-'use client';
 import { lenguajesSelect } from '../assets/js/constantes';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 interface FormData {
     lenguajes: string[];
@@ -30,17 +29,17 @@ export default function ModalLenguajes({ formData, handleCloseModal, toggleLengu
                     <h2 className="text-xl font-bold mb-4">Selecciona los lenguajes</h2>
                     <div className="grid grid-cols-2 gap-3 max-h-60 overflow-y-auto">
                         {lenguajesSelect
-                            .filter(({ value }) => value !== '') // Filtra los vacíos
-                            .map(({ value: lang }) => (
-                                <label key={lang} className="flex items-center gap-2 cursor-pointer">
+                            .filter(({ value }: { value: string }) => value !== '') // Filtra los vacíos
+                            .map(({ value }: { value: string }, i: number) => (
+                                <label key={i} className="flex items-center gap-2 cursor-pointer">
                                     <input
-                                        name={lang}
+                                        name={value}
                                         type="checkbox"
-                                        checked={formData.lenguajes.includes(lang)}
-                                        onChange={() => toggleLenguaje(lang)}
+                                        checked={formData.lenguajes.includes(value)}
+                                        onChange={() => toggleLenguaje(value)}
                                         className="accent-blue-500"
                                     />
-                                    {lang}
+                                    {value}
                                 </label>
                             ))
                         }
@@ -52,7 +51,6 @@ export default function ModalLenguajes({ formData, handleCloseModal, toggleLengu
                     </div>
                 </div>
             </div>
-            <Toaster position="bottom-center" toastOptions={{ removeDelay: 3000, style: { background: 'rgb(0,0,0)', fontSize: '1.1rem', color: '#fff', borderColor: '#48e', borderRadius: '20px', borderWidth: '3px', padding: '10px 20px' } }} />
         </>
     );
 }

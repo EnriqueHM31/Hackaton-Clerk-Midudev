@@ -1,7 +1,7 @@
 'use client';
 import { useUser } from '@clerk/clerk-react';
 import { useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 
 interface Props {
@@ -199,7 +199,6 @@ export default function FormularioParticipacion({ idHack: id_hackaton, date_end 
                     </div>
                 )
             }
-            <Toaster position="bottom-center" toastOptions={{ removeDelay: 3000, style: { background: 'rgb(0,0,0)', fontSize: '1.1rem', color: '#fff', borderColor: '#48e', borderRadius: '20px', borderWidth: '3px', padding: '10px 20px' } }} />
         </>
     );
 }

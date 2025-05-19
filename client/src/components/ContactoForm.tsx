@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 export default function ContactForm() {
     const [formData, setFormData] = useState({
@@ -36,7 +36,6 @@ export default function ContactForm() {
 
     return (
         <div className="w-full z-50">
-            <Toaster position="bottom-center" />
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-6">
                     <div className="grid grid-cols-2 gap-2">

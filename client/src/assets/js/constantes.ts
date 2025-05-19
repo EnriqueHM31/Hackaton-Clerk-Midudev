@@ -1,4 +1,9 @@
-export const lenguajesSelect = [
+interface Lenguaje {
+    value: string;
+    label: string;
+}
+
+export const lenguajesSelect: Lenguaje[] = [
     { value: "", label: "Todos" },
     { value: "JavaScript", label: "JavaScript" },
     { value: "Python", label: "Python" },
@@ -12,3 +17,5 @@ export const lenguajesSelect = [
     { value: "Rust", label: "Rust" },
     { value: "Lenguaje Libre", label: "Lenguaje Libre" },
 ];
+
+

@@ -10,6 +10,7 @@ import ParticipantesMisHacks from './components/ParticipantesMisHacks';
 import PanelPrincipal from './components/PanelPrincipal.js';
 import HackatonesAutor from './components/HackatonesAutor.js';
 import HackatonAutor from './components/HackatonAutorId.js';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
@@ -48,6 +49,8 @@ function AppContent() {
         <Route path="/hackatonAutor/:id/:nombre" element={<HackatonAutor />} />
 
       </Routes>
+      <Toaster position="bottom-center" toastOptions={{ removeDelay: 3000, style: { background: 'rgb(0,0,0)', fontSize: '1.1rem', color: '#fff', borderColor: '#48e', borderRadius: '20px', borderWidth: '3px', padding: '10px 20px' } }} />
+
 
       <Footer />
     </>
