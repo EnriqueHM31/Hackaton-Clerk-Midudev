@@ -18,8 +18,9 @@ router.get('/all', async (req, res) => {
 });
 
 router.get('/hackaton/:id', async (req, res) => {
-    const { id } = req.params;
 
+    const { id } = req.params;
+    console.log("id", id);
     try {
         const result = await query('SELECT * FROM hackathons WHERE id = $1', [id]);
 
@@ -131,34 +132,26 @@ router.post('/participaciones', async (req, res) => {
 
 });
 
-// GET /api/participaciones/hackaton/:idHack
-router.get('participaciones/hackaton/:idHack', async (req, res) => {
-    const { idHack } = req.params;
-    console.log(idHack);
 
-    if (!idHack) {
-        return res.status(400).json({ error: 'Falta el parámetro idHack' });
-    }
+router.get('/participaciones/:id', async (req, res) => {
 
+    const { id } = req.params;
+    console.log("participaciones", id);
     try {
-        const query = 'SELECT * FROM participaciones WHERE id_hackaton = ?';
-        db.query(query, [idHack], (err, results) => {
-            if (err) {
-                console.error('Error en la base de datos:', err);
-                return res.status(500).json({ error: 'Error en la base de datos' });
-            }
+        const result = await query('SELECT * FROM participaciones WHERE hackathon_id = $1', [id]);
 
-            res.status(200).json(results);
-        });
+
+        res.json(result.rows);
     } catch (error) {
-        console.error('Error del servidor:', error);
-        res.status(500).json({ error: 'Error del servidor' });
+        console.error('Error al obtener hackatón:', error);
+        res.status(500).json({ error: 'Error en la base de datos' + error.message });
     }
 });
 
 router.get('/ganadores/:idHack', (req, res) => {
     const { idHack } = req.params;
 
+    console.log("ganadores", idHack);
     if (!idHack) {
         return res.status(400).json({ error: 'Falta el parámetro idHack' });
     }
@@ -228,7 +221,6 @@ router.post('/register', async (req, res) => {
 // Ruta GET /api/hackatones/autor?userId=...
 router.get('/autor', async (req, res) => {
     const userId = req.query.userId;
-    console.log(userId);
 
     if (!userId) {
         return res.status(400).json({ error: 'userId query param is required' });

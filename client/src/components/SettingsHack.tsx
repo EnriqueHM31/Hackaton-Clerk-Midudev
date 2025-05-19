@@ -93,7 +93,7 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
 
     return (
         <>
-            <div className="relative p-4 rounded-xl text-black w-full my-4 z-50 flex gap-5 bg-gray-900">
+            <div className="relative p-4 rounded-xl w-full my-4 z-50 flex gap-5 text-white">
                 <div className="flex-1 w-full">
                     <img
                         src={hackaton.imagen}
@@ -142,7 +142,7 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
                         </p>
                     </div>
 
-                    <div className="flex gap-4 items-center py-1">
+                    <div className="flex gap-4 py-1 flex-col">
                         <span className="text-secondary font-bold text-xl ">Patrocinador: </span>
                         <a
                             href={hackaton.sitio}

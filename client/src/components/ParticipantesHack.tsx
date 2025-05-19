@@ -49,12 +49,13 @@ export default function ParticipantesHackaton({ idHack }: Props) {
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log(idHack);
             setLoading(true);
             try {
                 const [resHackaton, resParticipantes, resGanadores] = await Promise.all([
                     fetch(`http://localhost:3000/api/hackatones/hackaton/${idHack}`),
-                    fetch(`http://localhost:3000/api/hackatones/participaciones/hackaton/${idHack}`),
-                    fetch(`http://localhost:3000/api/hackatones/ganadores/hackaton/${idHack}`)
+                    fetch(`http://localhost:3000/api/hackatones/participaciones/${idHack}`),
+                    fetch(`http://localhost:3000/api/hackatones/hackaton/${idHack}`)
                 ]);
 
                 const [dataHackaton, dataParticipantes, dataGanadores] = await Promise.all([
@@ -62,10 +63,6 @@ export default function ParticipantesHackaton({ idHack }: Props) {
                     resParticipantes.json(),
                     resGanadores.json()
                 ]);
-
-                console.log(dataHackaton);
-                console.log(dataParticipantes);
-                console.log(dataGanadores);
 
                 if (!resHackaton.ok) toast.error(dataHackaton.error || 'Error al obtener datos del hackatón');
                 else setHackaton(dataHackaton);
@@ -212,6 +209,10 @@ export default function ParticipantesHackaton({ idHack }: Props) {
 
     if (participantes.length === 0)
         return <p className="text-gray-300 text-2xl font-bold w-full text-center mt-6">No hay participantes inscritos aún.</p>;
+
+    console.log(hackaton);
+    console.log(participantes);
+    console.log(ganadores);
 
     return (
         <>

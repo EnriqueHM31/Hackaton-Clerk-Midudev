@@ -59,7 +59,7 @@ const HackatonList = () => {
 
 
 
-        <section className="grid_hackatones min-h-screen mb-10 z-50">
+        <section className="grid_hackatones min-h-screen mb-10 z-50 w-full">
             {hackatonesVisibles.map(({ id, nombre, descripcion, start_date, end_date, lenguajes, imagen }) => (
 
                 <Link

@@ -8,7 +8,7 @@ export default function HackatonAutorId() {
     return (
         <div className="flex flex-col justify-between items-center w-full">
             <section className="gap-6 text-white w-full max-w-[1200px] mx-auto z-50 bg-black my-10">
-                <div className="flex flex-col items-start justify-center w-full gap-12 mb-12 min-h-dvh">
+                <div className="flex flex-col items-start justify-center w-full gap-12 mb-12 min-h-dvh bg-black ">
                     <div className="flex-1 w-full">
                         <SettingsHack id={id as string} />
                     </div>
