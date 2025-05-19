@@ -13,30 +13,21 @@ interface Participacion {
     joined_at: string;
 }
 
-export default function ModalGanadorHackaton({
-    user_id,
-    idHack,
-    lugar,
-}: {
-    user_id: string;
-    idHack: number;
-    lugar: number;
-}) {
+export default function ModalGanadorHackaton({ user_id, idHack, lugar, }: { user_id: string; idHack: number; lugar: number; }) {
+
     const [ganadoresBD, setGanadoresBD] = useState<Participacion[]>([]);
     const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchGanadores = async () => {
             try {
-                const res = await fetch(
-                    `/api/participaciones?idHack=${encodeURIComponent(
-                        idHack
-                    )}${user_id ? `&idUser=${encodeURIComponent(user_id)}` : ""}`
+                const res = await fetch(`http://localhost:3000/api/hackatones/participaciones?idHack=${idHack}&idUser=${user_id}`
                 );
                 const data = await res.json();
 
-                if (res.ok && Array.isArray(data) && data.length > 0) {
-                    setGanadoresBD(data);
+                if (res.ok) {
+                    console.log(data.result);
+                    setGanadoresBD(data.result);
                 }
             } catch (error) {
                 console.error(error);
@@ -86,12 +77,12 @@ export default function ModalGanadorHackaton({
 
                         {/* Lista de ganadores */}
                         {ganadoresBD.length === 0 ? (
-                            <p className="text-center text-gray-400 mt-6">
-                                No hay ganadores disponibles.
-                            </p>
+                            <section className="text-center text-gray-400 mt-6">
+                                Ocurrio un error con la informacion del ganador
+                            </section>
                         ) : (
                             ganadoresBD.map((ganador) => (
-                                <div className="bg-gray-900 w-full rounded-lg flex flex-col">
+                                <div key={ganador.id} className="bg-gray-900 w-full rounded-lg flex flex-col">
                                     <div className="flex p-2 gap-1">
                                         <div className="circle">
                                             <span className="bg-red-500 inline-block center w-3 h-3 rounded-full"></span>
@@ -118,13 +109,13 @@ export default function ModalGanadorHackaton({
                                             </div>
                                             <div className="flex flex-col gap-2">
                                                 <p className="text-2xl text-pink-400 font-bold">Github:</p>
-                                                <a className="text-xl hover:text-blue-400 text-white transition-colors" href={ganador.github_perfil} target="_blank" rel="noopener noreferrer">
+                                                <a className="text-xl hover:text-blue-400 text-white transition-colors break-words break-all" href={ganador.github_perfil} target="_blank" rel="noopener noreferrer">
                                                     {ganador.github_perfil}
                                                 </a>
                                             </div>
                                             <div className="flex flex-col gap-2">
                                                 <p className="text-2xl text-pink-400 font-bold">Repositorio:</p>
-                                                <a className="text-xl hover:text-blue-400 text-white transition-colors" href={ganador.repositorio} target="_blank" rel="noopener noreferrer">
+                                                <a className="text-xl hover:text-blue-400 text-white transition-colors break-words break-all" href={ganador.repositorio} target="_blank" rel="noopener noreferrer">
                                                     {ganador.repositorio}
                                                 </a>
                                             </div>

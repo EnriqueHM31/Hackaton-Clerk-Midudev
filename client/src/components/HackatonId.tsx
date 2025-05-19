@@ -18,16 +18,19 @@ interface Hackaton {
 }
 
 interface Ganador {
-    participante: string;
+    participanteid: string;
+    fechaasignacion: string;
     lugar: number;
+    idhack: number;
 }
 
 
 export default function HackatonId() {
-    const { id } = useParams<{ id: string }>();
+    const { id: idHack } = useParams<{ id: string }>();
     const [Hackaton, setHackaton] = useState<Hackaton>();
     const [isLoading, setIsLoading] = useState(true);
     const [ganadores, setGanadores] = useState<Ganador[]>([]);
+
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, []);
@@ -36,8 +39,9 @@ export default function HackatonId() {
         const fetchDatosHackaton = async () => {
             try {
                 const [resHackaton, resGanadores] = await Promise.all([
-                    fetch(`http://localhost:3000/api/hackatones/hackaton/${id}`),
-                    fetch(`http://localhost:3000/api/hackatones/ganadores/${id}`)
+                    fetch(`http://localhost:3000/api/hackatones/hackaton/${idHack}`),
+                    fetch(`http://localhost:3000/api/hackatones/ganadores/${idHack}`),
+
                 ]);
 
                 const [dataHackaton, dataGanadores] = await Promise.all([
@@ -59,7 +63,7 @@ export default function HackatonId() {
             }
         };
 
-        if (id) {
+        if (idHack) {
             fetchDatosHackaton();
         }
         const timer = setTimeout(() => {
@@ -67,7 +71,7 @@ export default function HackatonId() {
         }, 500);
         return () => clearTimeout(timer);
 
-    }, [id]);
+    }, [idHack]);
 
     if (isLoading) {
         return (
@@ -87,7 +91,9 @@ export default function HackatonId() {
         );
     }
 
-    const { id: idHack, nombre, descripcion, start_date, end_date, lenguajes, imagen, sitio, instrucciones, premios } = Hackaton;
+    const { id, nombre, descripcion, start_date, end_date, lenguajes, imagen, sitio, instrucciones, premios } = Hackaton;
+
+    console.log(ganadores)
 
 
     return (
@@ -131,7 +137,7 @@ export default function HackatonId() {
                             {
                                 ganadores.length === 0 ? (
                                     <ModalParticipar
-                                        idHack={idHack}
+                                        idHack={id}
                                         date_end={end_date as string}
                                     />
                                 ) : (
@@ -149,18 +155,22 @@ export default function HackatonId() {
                         ganadores.length > 0 && (
                             <section className="w-full mt-6 flex gap-5 flex-col">
                                 <p className="text-3xl text-blue-300">Ganadores</p>
-                                <p className="text-white">
-                                    <div className="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-                                        {ganadores.map((g: { participante: string; lugar: number }, idx: number) => (
-                                            <ModalGanadorHackaton
-                                                key={idx}
-                                                user_id={g.participante}
-                                                idHack={idHack}
-                                                lugar={g.lugar}
-                                            />
-                                        ))}
-                                    </div>
-                                </p>
+                                <div className="text-white">
+                                    <section className="flex flex-col gap-6">
+                                        <div className='grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3'>
+
+                                            {ganadores.map((g: Ganador, idx: number) => (
+                                                <ModalGanadorHackaton
+                                                    key={idx}
+                                                    user_id={g.participanteid}
+                                                    idHack={id}
+                                                    lugar={g.lugar}
+                                                />
+                                            ))}
+                                        </div>
+
+                                    </section>
+                                </div>
                             </section>
                         )
                     }

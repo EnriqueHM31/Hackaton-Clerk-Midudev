@@ -47,9 +47,29 @@ router.get('/ganadores/:idHack', async (req, res) => {
         res.status(200).json({ ganadores: ganadores.rows });
     } catch (error) {
         console.error('Error al obtener ganadores:', error);
-        res.status(500).json({ error: 'Error en la base de datos' });
+        res.status(500).json({ error: 'Error en la base de datos' + error });
     }
 });
+
+
+router.get('/ganadores/existen/all', async (req, res) => {
+
+    try {
+        const ganadoresArray = await query(
+            'SELECT * FROM ganadores',
+        );
+
+        const ganadores = ganadoresArray.rows;
+
+        res.status(200).json({ ganadores });
+    } catch (error) {
+        console.error('Error al obtener ganadores:', error);
+        res.status(500).json({ error: 'Error en la base de datos' + error });
+    }
+});
+
+
+
 
 // GET /api/participaciones?idHack=1&idUser=abc123
 router.get('/participaciones', async (req, res) => {
@@ -136,7 +156,7 @@ router.post('/participaciones', async (req, res) => {
 router.get('/participaciones/:id', async (req, res) => {
 
     const { id } = req.params;
-    console.log("participaciones", id);
+
     try {
         const result = await query('SELECT * FROM participaciones WHERE hackathon_id = $1', [id]);
 
@@ -148,25 +168,6 @@ router.get('/participaciones/:id', async (req, res) => {
     }
 });
 
-router.get('/ganadores/:idHack', (req, res) => {
-    const { idHack } = req.params;
-
-    console.log("ganadores", idHack);
-    if (!idHack) {
-        return res.status(400).json({ error: 'Falta el parámetro idHack' });
-    }
-
-    const query = 'SELECT * FROM ganadores WHERE id_hackaton = ?';
-
-    db.query(query, [idHack], (err, results) => {
-        if (err) {
-            console.error('Error al obtener ganadores:', err);
-            return res.status(500).json({ error: 'Error en la base de datos' });
-        }
-
-        res.status(200).json(results);
-    });
-});
 
 
 router.post('/register', async (req, res) => {
@@ -298,6 +299,32 @@ router.delete('/eliminar/hackaton/', async (req, res) => {
         res.status(500).json({ error: 'Error en la base de datos' });
     }
 });
+
+
+router.get('/ganador', async (req, res) => {
+    const { id_participante, idHack } = req.query;
+    console.log(id_participante, idHack);
+
+    if (!id_participante || !idHack) {
+        return res.status(400).json({ error: 'Faltan parámetros' });
+    }
+
+    try {
+        const result = await query(
+            'SELECT * FROM ganadores WHERE participanteId = $1 AND idHack = $2',
+            [id_participante, idHack]
+        );
+
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error al obtener ganadores:', error);
+        res.status(500).json({ error: 'Error interno del servidor' + error });
+    }
+});
+
+
+
+
 
 export default router;
 

@@ -15,12 +15,18 @@ interface Hackaton {
     lenguajes: string[];
     imagen?: string | null;
     yaParticipa: boolean;
+    ganadores: boolean;
 }
 
 interface ParticipaciónHack {
     hackathon_id: number;
 }
 
+interface Ganador {
+    participanteid: string;
+    lugar: number;
+    idhack: number;
+}
 
 export default function HackatonesList() {
     const { user } = useUser();
@@ -33,17 +39,23 @@ export default function HackatonesList() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [resParticipaciones, resHackatones] = await Promise.all([
+                const [resParticipaciones, resHackatones, resGanadores] = await Promise.all([
                     fetch(`http://localhost:3000/api/hackatones/participaciones/idusuario?idUser=${id_usuario}`),
                     fetch(`http://localhost:3000/api/hackatones/all`),
+                    fetch(`http://localhost:3000/api/hackatones/ganadores/existen/all`),
+
+
                 ]);
 
                 if (!resParticipaciones.ok) throw new Error('Error al obtener participaciones');
                 if (!resHackatones.ok) throw new Error('Error al obtener hackatones');
+                if (!resGanadores.ok) throw new Error('Error al obtener ganadores');
 
                 const dataParticipaciones = await resParticipaciones.json();
                 const dataHackatones = await resHackatones.json();
+                const { ganadores } = await resGanadores.json();
 
+                console.log(ganadores);
 
                 const hackatonesConParticipacion = dataHackatones.map((hackaton: Hackaton) => {
                     const participa = dataParticipaciones.some(
@@ -55,8 +67,19 @@ export default function HackatonesList() {
                     };
                 });
 
-                setHackatones(hackatonesConParticipacion);
+                const hackatonesConGanadores = hackatonesConParticipacion.map((hackaton: Hackaton) => {
+                    const ganador = ganadores.some(
+                        (g: Ganador) => g.idhack === hackaton.id
+                    );
+                    return {
+                        ...hackaton,
+                        ganadores: ganador
+                    };
+                });
 
+                console.log(hackatonesConGanadores);
+
+                setHackatones(hackatonesConGanadores);
 
 
             } catch (error) {
@@ -158,9 +181,9 @@ export default function HackatonesList() {
                         </div>
                     )
                 }
-                {hackatonesVisibles.map(({ id, nombre, descripcion, start_date, end_date, lenguajes, imagen, yaParticipa }: Hackaton) => {
+                {hackatonesVisibles.map(({ id, nombre, descripcion, start_date, end_date, lenguajes, imagen, yaParticipa, ganadores }: Hackaton) => {
                     const yaFinalizado = Finalizado(end_date as string);
-                    const estadoClase = yaFinalizado
+                    const estadoClase = yaFinalizado || ganadores
                         ? 'bg-purple-900 cursor-not-allowed'
                         : yaParticipa
                             ? 'bg-blue-600 cursor-not-allowed'
@@ -236,7 +259,7 @@ export default function HackatonesList() {
                                                 <span className="transition-all duration-500 group-hover:translate-x-1">
                                                     <span className="text-white font-bold">
                                                         {
-                                                            yaFinalizado
+                                                            yaFinalizado || ganadores
                                                                 ? "Finalizado"
                                                                 : yaParticipa
                                                                     ? "Participando"
