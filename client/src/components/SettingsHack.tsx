@@ -1,5 +1,4 @@
-'use client';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 type Hackaton = {
@@ -14,33 +13,35 @@ type Hackaton = {
 };
 
 type Props = {
-    idHack: string;
+    id: string;
     onDeleted?: () => void;
 };
 
-const HackatonCard = ({ idHack, onDeleted }: Props) => {
+const SettingsHack = ({ id: id, onDeleted }: Props) => {
     const [showModal, setShowModal] = useState(false);
     const [expandedDesc, setExpandedDesc] = useState(false);
     const [hackaton, setHackaton] = useState<Hackaton | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!idHack) return;
+        if (!id) return;
 
         const fetchHackaton = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`/api/idhackaton?idHack=${encodeURIComponent(idHack)}`);
+                const res = await fetch(`http://localhost:3000/api/hackatones/hackaton/${id}`);
                 const data = await res.json();
 
-                if (res.ok && data.hackatonRaw) {
 
-                    setHackaton(data.hackatonRaw,);
+                if (res.ok && data) {
+
+                    setHackaton(data,);
                 } else {
                     toast.error('Hackatón no encontrado.');
                     setHackaton(null);
                 }
             } catch (error) {
+                console.error(error);
                 toast.error('Error al obtener datos del hackatón.');
                 setHackaton(null);
             } finally {
@@ -48,14 +49,17 @@ const HackatonCard = ({ idHack, onDeleted }: Props) => {
             }
         };
 
-        fetchHackaton();
-    }, []);
+        if (id) {
+            fetchHackaton();
+        }
+
+    }, [id]);
 
     const handleEliminar = async () => {
         if (!hackaton) return;
 
         try {
-            const res = await fetch(`/api/eliminarhack?idhack=${hackaton.id}`, {
+            const res = await fetch(`/api/eliminarhack?id=${hackaton.id}`, {
                 method: 'DELETE',
             });
 
@@ -213,4 +217,4 @@ const HackatonCard = ({ idHack, onDeleted }: Props) => {
     );
 };
 
-export default HackatonCard;
+export default SettingsHack;

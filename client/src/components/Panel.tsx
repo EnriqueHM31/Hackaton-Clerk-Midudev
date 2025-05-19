@@ -1,10 +1,11 @@
 'use client';
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import PreviewCard from './CarPrev';
 import ModalLenguajes from './ModalLenguajes';
 import ModalPremios from './ModalPremios';
 import toast, { Toaster } from 'react-hot-toast';
-
+import { useUser } from '@clerk/clerk-react';
+/*
 interface Participacion {
     id: number;
     user_id: string;
@@ -13,9 +14,11 @@ interface Participacion {
     github_perfil: string;
     repositorio: string;
     joined_at: string;
-}
+}*/
 
 export default function HackathonForm() {
+    const { user } = useUser();
+    const id_usuario = user?.id;
     const preset_name = "DevArena"
     const cloud_name = "dovznesem"
 
@@ -106,16 +109,18 @@ export default function HackathonForm() {
                 const file = await response.json();
                 imageUrl = file.secure_url;
             } catch (error) {
+                console.error(error);
                 toast.error("Error al subir la imagen");
                 return;
             }
         }
 
         const data = {
+            user_id: id_usuario,
             nombre: formData.nombre,
             descripcion: formData.descripcion,
-            startDate: formData.startDate,
-            endDate: formData.endDate,
+            start_date: formData.startDate,
+            end_date: formData.endDate,
             lenguajes: formData.lenguajes,
             imagen: imageUrl,
             instrucciones: formData.instrucciones,
@@ -125,7 +130,7 @@ export default function HackathonForm() {
 
 
         try {
-            const res = await fetch('/api/registerhackaton', {
+            const res = await fetch('http://localhost:3000/api/hackatones/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -134,11 +139,13 @@ export default function HackathonForm() {
             });
 
             if (!res.ok) {
-                throw new Error(`Error al registrar: ${res.statusText}`);
+                const data = await res.json();
+                throw new Error(`Error al registrar: datos: ${data.message}`);
             }
 
             toast.success('Se ha creado el hackathon correctamente');
         } catch (error) {
+            console.error(error);
             toast.error('Ocurrió un error al crear el hackathon');
         }
     };
@@ -173,30 +180,61 @@ export default function HackathonForm() {
                         />
 
                         <div className="grid grid-cols-2 gap-4">
-                            <label htmlFor="startDate" className="flex flex-col gap-2">
+                            <label htmlFor="startDate" className="flex flex-col gap-2 cursor-pointer relative">
                                 <p className="text-secondary text-2xl font-bold">Fecha de inicio</p>
-                                <input
-                                    type="date"
-                                    name="startDate"
-                                    id="startDate"
-                                    className="p-3 border border-secondary rounded bg-black placeholder:text-white/50 text-white"
-                                    value={formData.startDate}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <div className="relative">
+                                    <input
+                                        type="date"
+                                        name="startDate"
+                                        id="startDate"
+                                        className="p-3 border border-secondary rounded bg-black placeholder:text-white/50 text-white appearance-none w-full"
+                                        value={formData.startDate}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    {/* Ícono calendario blanco */}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="w-6 h-6 text-white absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                    >
+                                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg>
+                                </div>
                             </label>
 
-                            <label htmlFor="endDate" className="flex flex-col gap-2">
+                            <label htmlFor="endDate" className="flex flex-col gap-2 cursor-pointer relative">
                                 <p className="text-secondary text-2xl font-bold">Fecha de fin</p>
-                                <input
-                                    type="date"
-                                    name="endDate"
-                                    id="endDate"
-                                    className="p-3 border border-secondary rounded bg-black placeholder:text-white/50 text-white"
-                                    value={formData.endDate}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <div className="relative">
+                                    <input
+                                        type="date"
+                                        name="endDate"
+                                        id="endDate"
+                                        className="p-3 border border-secondary rounded bg-black placeholder:text-white/50 text-white appearance-none w-full"
+                                        value={formData.endDate}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="w-6 h-6 text-white absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                    >
+                                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg>
+                                </div>
                             </label>
                         </div>
 
@@ -210,16 +248,26 @@ export default function HackathonForm() {
                         />
 
                         <div className="grid w-full items-center gap-3">
-                            <label className="text-secondary text-2xl font-bold" htmlFor="picture">
+                            <label
+                                htmlFor="picture"
+                                className="text-secondary text-2xl font-bold cursor-pointer "
+                            >
                                 Imagen
                             </label>
                             <input
                                 id="picture"
                                 type="file"
                                 accept="image/*"
-                                className="flex h-10 w-full rounded-md border border-secondary bg-black px-3 py-2 text-sm text-white file:border-0 file:bg-transparent file:text-black file:text-sm file:font-medium"
+                                className="hidden"
                                 onChange={(e) => handleImage(e)}
                             />
+                            <button
+                                type="button"
+                                onClick={() => document.getElementById('picture')?.click()}
+                                className="flex h-10 w-full rounded-md border border-secondary bg-black px-3 py-2 text-sm text-white text-center items-center justify-center"
+                            >
+                                Seleccionar imagen
+                            </button>
                         </div>
 
                         {/* Lenguajes */}

@@ -1,5 +1,7 @@
 'use client';
-import React, { useState, useEffect, use } from 'react';
+import { useUser } from '@clerk/clerk-react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 interface HackatonProps {
     id: number;
@@ -12,30 +14,30 @@ interface HackatonProps {
     imagen: string;
 }
 
-interface HackatonListProps {
-    hackatones: HackatonProps[];
-}
-
-const HackatonList = ({ userId }: { userId: string }) => {
+const HackatonList = () => {
+    const { user } = useUser();
+    const userId = user?.id || '';
     const [visibleCount, setVisibleCount] = useState(6);
     const [hackatones, setHackatones] = useState<HackatonProps[]>([]);
 
     useEffect(() => {
         const fetchHackatones = async () => {
-            const res = await fetch(`/api/hackatonesauth?userId=${userId}`);
+            const res = await fetch(`http://localhost:3000/api/hackatones/autor?userId=${userId}`);
             const data = await res.json();
 
             if (!res.ok) {
                 return;
             }
-            setHackatones(data.hackatones);
+            setHackatones(data);
         };
 
-        fetchHackatones();
-    }, []);
+        if (userId) {
+            fetchHackatones();
+        }
+    }, [userId]);
 
     if (hackatones?.length === 0) {
-        return <p className="text-white text-2xl text-center py-8">No has creado ningún hackatón aún.</p>;
+        return <p className="text-white text-3xl text-center py-8 font-bold">No has creado ningún hackatón aún.</p>;
     }
 
     let hackatonesVisibles = [];
@@ -60,10 +62,10 @@ const HackatonList = ({ userId }: { userId: string }) => {
         <section className="grid_hackatones min-h-screen mb-10 z-50">
             {hackatonesVisibles.map(({ id, nombre, descripcion, start_date, end_date, lenguajes, imagen }) => (
 
-                <a
+                <Link
                     key={id}
-                    href={`/organizador/hackatonAuth/${id}/${nombre}`}
-                    className={`bg-black ${hackatones.length < 2 ? 'max-w-2/6' : ''} text-white p-10 px-6 rounded-lg w-full font-mono card-animada shadow-xl transition-colors duration-200 z-50 max-h-[530px]`}
+                    to={`/hackatonAutor/${id}/${nombre}`}
+                    className={`bg-black ${hackatones.length < 2 ? 'max-w-2/6' : ''} text-white p-10 px-6 rounded-lg w-full font-mono card-animada shadow-xl transition-colors duration-200 z-50 min-h-[580px] max-h-[580px]`}
                 >
                     <div className="w-full">
                         <div className="flex justify-between items-center z-50">
@@ -105,7 +107,7 @@ const HackatonList = ({ userId }: { userId: string }) => {
                             </div>
                         </div>
                     </div>
-                </a>
+                </Link>
             ))}
 
             {visibleCount < hackatones.length && (

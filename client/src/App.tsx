@@ -7,6 +7,9 @@ import Hackatones from './components/Hackatones.js';
 import Footer from './components/Footer.js';
 import HackatonId from './components/HackatonId.js';
 import ParticipantesMisHacks from './components/ParticipantesMisHacks';
+import PanelPrincipal from './components/PanelPrincipal.js';
+import HackatonesAutor from './components/HackatonesAutor.js';
+import HackatonAutor from './components/HackatonAutorId.js';
 
 function App() {
   return (
@@ -40,6 +43,9 @@ function AppContent() {
         <Route path="/hackatones" element={<Hackatones />} />
         <Route path="/hackaton/:id" element={<HackatonId />} />
         <Route path="/participante/mis-hackatones" element={<ParticipantesMisHacks />} />
+        <Route path="/panel" element={<PanelPrincipal />} />
+        <Route path="/hackatonesAutor" element={<HackatonesAutor />} />
+        <Route path="/hackatonAutor/:id/:nombre" element={<HackatonAutor />} />
 
       </Routes>
 

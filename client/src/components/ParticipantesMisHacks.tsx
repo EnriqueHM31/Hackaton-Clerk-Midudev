@@ -38,10 +38,10 @@ export default function ParticipantesMisHacks() {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 p-4 min-h-dvh max-w-laptop mx-auto">
             {participaciones.map((p, i) => (
-                <Link to={`/hackaton/${p.hackathon_id}`} key={i} className="bg-black border border-green-400 rounded-2xl shadow p-6 hover:shadow-lg  z-50 flex flex-col gap-4 relative group justify-center hover:justify-start transition-all duration-300">
+                <Link to={`/hackaton/${p.hackathon_id}`} key={i} className="bg-black border border-green-400 rounded-2xl shadow p-6 hover:shadow-lg  z-50 flex flex-col gap-4 relative group justify-center hover:justify-start transition-all duration-300 min-h-80 max-h-80">
                     <p className="text-2xl font-bold text-green-400">Tu proyecto {p.nombre_proyecto}</p>
                     <p className="text-white text-md"><strong>Usuario: </strong>{p.username}</p>
-                    <p className="text-white text-md"><strong>Repositorio: </strong> Link del repositorio</p>
+                    <p className="text-white text-md break-words break-all "><strong>Repositorio: </strong> {p.repositorio}</p>
                     <p className="text-white text-md">Registrado el: {p.joined_at}</p>
 
                     <div className="absolute w-full h-1/2 bottom-0 left-0 bg-black/80 rounded-2xl  z-100  flex justify-center items-center transform group-hover:scale-100 scale-0 transition-transform ">

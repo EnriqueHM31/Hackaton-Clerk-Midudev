@@ -1,11 +1,8 @@
-'use client';
 
-import { ClerkProvider, useUser } from '@clerk/clerk-react';
+import { useUser } from '@clerk/clerk-react';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import CardPartipanteProyecto from './CardPartipanteProyecto';
-import { dark } from '@clerk/themes';
-import { esES } from '@clerk/localizations';
 
 type Participante = {
     id: number;
@@ -34,7 +31,7 @@ type Props = {
     idHack: string;
 };
 
-const ParticipantesHackatonContenido: React.FC<Props> = ({ idHack }) => {
+export default function ParticipantesHackaton({ idHack }: Props) {
     const { user } = useUser();
     const userId = user?.id || '';
 
@@ -51,63 +48,51 @@ const ParticipantesHackatonContenido: React.FC<Props> = ({ idHack }) => {
 
 
     useEffect(() => {
-        const fetchParticipantes = async () => {
+        const fetchData = async () => {
             setLoading(true);
             try {
-                const url = `/api/participaciones?idHack=${encodeURIComponent(idHack)}${userId ? `&idUser=${encodeURIComponent(userId)}` : ''
-                    }`;
-                const res = await fetch(url);
-                const data = await res.json();
+                const [resHackaton, resParticipantes, resGanadores] = await Promise.all([
+                    fetch(`http://localhost:3000/api/hackatones/hackaton/${idHack}`),
+                    fetch(`http://localhost:3000/api/hackatones/participaciones/hackaton/${idHack}`),
+                    fetch(`http://localhost:3000/api/hackatones/ganadores/hackaton/${idHack}`)
+                ]);
 
-                if (!res.ok) {
-                    toast.error(data.error || 'Error al obtener participantes');
-                    return;
+                const [dataHackaton, dataParticipantes, dataGanadores] = await Promise.all([
+                    resHackaton.json(),
+                    resParticipantes.json(),
+                    resGanadores.json()
+                ]);
+
+                console.log(dataHackaton);
+                console.log(dataParticipantes);
+                console.log(dataGanadores);
+
+                if (!resHackaton.ok) toast.error(dataHackaton.error || 'Error al obtener datos del hackatón');
+                else setHackaton(dataHackaton);
+
+                if (!resParticipantes.ok) toast.error(dataParticipantes.error || 'Error al obtener participantes');
+                else setParticipantes(dataParticipantes);
+
+                if (!resGanadores.ok) toast.error(dataGanadores.error || 'Error al obtener ganadores existentes');
+                else {
+                    setGanadoresBD(dataGanadores);
+                    setGanadoresLoading(true);
                 }
 
-                setParticipantes(data);
             } catch (error) {
                 console.error('Error al conectar con el servidor:', error);
-                toast.error('Error al conectar con el servidor');
+                toast.error('Error de red al obtener los datos');
             } finally {
                 setLoading(false);
             }
-
         };
 
-        const fetchGanadores = async () => {
-            try {
-                const res = await fetch(`/api/ganadoresHack?idHack=${idHack}`);
-                const data = await res.json();
-
-                if (res.ok && Array.isArray(data) && data.length > 0) {
-                    setGanadoresBD(data);
-                    setGanadoresLoading(true);
-                }
-            } catch (error) {
-
-                toast.error('Error al obtener ganadores existentes');
-            }
-        };
-
-        const fetchHackaton = async () => {
-            try {
-                const res = await fetch(`/api/idhackaton?idHack=${idHack}`);
-                const data = await res.json();
-
-                if (res.ok && data.hackatonRaw) {
-                    setHackaton(data.hackatonRaw);
-                }
-            } catch (error) {
-                toast.error('Error al obtener datos del hackatón.');
-            }
-        };
-
-        if (idHack) {
-            fetchParticipantes();
-            fetchGanadores();
-            fetchHackaton();
+        if (idHack && userId) {
+            fetchData();
         }
-    }, [idHack]);
+    }, [userId, idHack]);
+
+
 
     const visibles = participantes.slice(0, visibleCount);
 
@@ -184,7 +169,8 @@ const ParticipantesHackatonContenido: React.FC<Props> = ({ idHack }) => {
         });
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         if (ganadores.length !== hackaton?.premios.length) {
             toast.error(`Debes asignar los ${hackaton?.premios.length} ganadores antes de guardar`);
             return;
@@ -216,6 +202,7 @@ const ParticipantesHackatonContenido: React.FC<Props> = ({ idHack }) => {
 
             toast.success(data.message || 'Ganadores guardados exitosamente');
         } catch (error) {
+            console.error(error);
             toast.error('Error al conectar con el servidor');
         }
     };
@@ -304,7 +291,7 @@ const ParticipantesHackatonContenido: React.FC<Props> = ({ idHack }) => {
                     {ganadores.length > 0 && (
                         <form
                             onSubmit={(e) => {
-                                handleSubmit();
+                                handleSubmit(e);
                             }}
                             className="space-y-4"
                         >
@@ -390,15 +377,4 @@ const ParticipantesHackatonContenido: React.FC<Props> = ({ idHack }) => {
 };
 
 
-
-export default function ParticipantesHackaton({ idHack }: Props) {
-    return (
-        <ClerkProvider publishableKey={import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY} appearance={{ baseTheme: dark }} localization={esES}>
-
-            <ParticipantesHackatonContenido idHack={idHack} />
-
-        </ClerkProvider>
-    );
-
-}
 

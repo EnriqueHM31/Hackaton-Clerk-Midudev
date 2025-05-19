@@ -131,6 +131,50 @@ router.post('/participaciones', async (req, res) => {
 
 });
 
+// GET /api/participaciones/hackaton/:idHack
+router.get('participaciones/hackaton/:idHack', async (req, res) => {
+    const { idHack } = req.params;
+    console.log(idHack);
+
+    if (!idHack) {
+        return res.status(400).json({ error: 'Falta el parámetro idHack' });
+    }
+
+    try {
+        const query = 'SELECT * FROM participaciones WHERE id_hackaton = ?';
+        db.query(query, [idHack], (err, results) => {
+            if (err) {
+                console.error('Error en la base de datos:', err);
+                return res.status(500).json({ error: 'Error en la base de datos' });
+            }
+
+            res.status(200).json(results);
+        });
+    } catch (error) {
+        console.error('Error del servidor:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+});
+
+router.get('/ganadores/:idHack', (req, res) => {
+    const { idHack } = req.params;
+
+    if (!idHack) {
+        return res.status(400).json({ error: 'Falta el parámetro idHack' });
+    }
+
+    const query = 'SELECT * FROM ganadores WHERE id_hackaton = ?';
+
+    db.query(query, [idHack], (err, results) => {
+        if (err) {
+            console.error('Error al obtener ganadores:', err);
+            return res.status(500).json({ error: 'Error en la base de datos' });
+        }
+
+        res.status(200).json(results);
+    });
+});
+
 
 router.post('/register', async (req, res) => {
     const {
@@ -147,8 +191,8 @@ router.post('/register', async (req, res) => {
     } = req.body;
 
     // Validar campos obligatorios
-    if (!user_id || !nombre || !descripcion || !start_date || !end_date || !instrucciones || !lenguajes || !premios || !sitio) {
-        return res.status(400).json({ error: 'Faltan campos obligatorios' });
+    if (!user_id || !nombre || !descripcion || !start_date || !end_date || !imagen || !instrucciones || !lenguajes || !premios || !sitio) {
+        return res.status(400).json({ error: 'Faltan campos obligatorios' } + error);
     }
 
     try {
@@ -177,6 +221,33 @@ router.post('/register', async (req, res) => {
     } catch (error) {
         console.error('Error al crear hackathon:', error);
         res.status(500).json({ error: 'Error en la base de datos: ' + error.message });
+    }
+});
+
+
+// Ruta GET /api/hackatones/autor?userId=...
+router.get('/autor', async (req, res) => {
+    const userId = req.query.userId;
+    console.log(userId);
+
+    if (!userId) {
+        return res.status(400).json({ error: 'userId query param is required' });
+    }
+
+    try {
+        const result = await query(
+            'SELECT * FROM hackathons WHERE user_id = $1',
+            [userId]
+        );
+
+        if (result.rows.length > 0) {
+            return res.json(result.rows);
+        }
+
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Server error:', error);
+        res.status(500).json({ error: 'Server error' + error });
     }
 });
 
