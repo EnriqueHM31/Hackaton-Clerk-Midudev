@@ -17,8 +17,6 @@ router.post('/', async (req, res) => {
         return res.status(400).json({ message: 'Faltan datos: role o userId' });
     }
 
-    console.log('Asignando rol:', role, 'a usuario:', userId);
-
     try {
         await clerkClient.users.updateUserMetadata(userId, {
             publicMetadata: { role }

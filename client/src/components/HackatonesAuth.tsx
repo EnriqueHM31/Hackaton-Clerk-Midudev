@@ -51,7 +51,6 @@ const HackatonList = ({ userId }: { userId: string }) => {
         setVisibleCount((prev) => Math.min(prev + 6, hackatones.length));
     };
 
-    console.log(typeof hackatonesVisibles[0].lenguajes);
 
 
     return (

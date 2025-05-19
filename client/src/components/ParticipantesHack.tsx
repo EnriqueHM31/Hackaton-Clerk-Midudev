@@ -66,6 +66,7 @@ const ParticipantesHackatonContenido: React.FC<Props> = ({ idHack }) => {
 
                 setParticipantes(data);
             } catch (error) {
+                console.error('Error al conectar con el servidor:', error);
                 toast.error('Error al conectar con el servidor');
             } finally {
                 setLoading(false);
@@ -222,7 +223,6 @@ const ParticipantesHackatonContenido: React.FC<Props> = ({ idHack }) => {
 
     if (loading) return <p className="text-white text-2xl w-full text-center mt-6">Cargando participantes...</p>;
 
-    console.log(participantes);
     if (participantes.length === 0)
         return <p className="text-gray-300 text-2xl font-bold w-full text-center mt-6">No hay participantes inscritos aún.</p>;
 

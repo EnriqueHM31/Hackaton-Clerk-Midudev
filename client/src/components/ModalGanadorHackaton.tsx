@@ -39,6 +39,7 @@ export default function ModalGanadorHackaton({
                     setGanadoresBD(data);
                 }
             } catch (error) {
+                console.error(error);
                 toast.error("Error al conectar con el servidor");
             }
         };

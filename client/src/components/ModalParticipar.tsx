@@ -1,15 +1,18 @@
 'use client';
+import { useUser } from '@clerk/clerk-react';
 import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 
 interface Props {
-    user_id: string;
     idHack: number;
-    username: string;
 }
 
-export default function FormularioParticipacion({ user_id: id_usuario, idHack: id_hackaton, username }: Props) {
+export default function FormularioParticipacion({ idHack: id_hackaton }: Props) {
+
+    const user = useUser();
+    const id_usuario = user?.user?.id;
+    const username = user?.user?.username;
     const [abierto, setAbierto] = useState(false);
     const [loading, setLoading] = useState(false);
     const [disabled, setDisabled] = useState(false);
@@ -20,16 +23,20 @@ export default function FormularioParticipacion({ user_id: id_usuario, idHack: i
         const fetchParticipantes = async () => {
             try {
                 const res = await fetch(
-                    `/api/participaciones?idHack=${encodeURIComponent(
-                        id_hackaton
-                    )}${id_usuario ? `&idUser=${encodeURIComponent(id_usuario)}` : ""}`
-                );
-                const data = await res.json();
+                    `http://localhost:3000/api/hackatones/participaciones?idHack=${id_hackaton}&idUser=${id_usuario}`
+                )
 
-                if (res.ok && Array.isArray(data) && data.length > 0) {
-                    setParticipacionActiva(true);
+                if (res.ok) {
+                    const data = await res.json();
+                    const result = data.result
+
+
+                    if (result.length > 0) {
+                        setParticipacionActiva(true);
+                    }
                 }
             } catch (error) {
+                console.error(error);
                 toast.error("Error al conectar con el servidor");
             }
         };
@@ -37,7 +44,7 @@ export default function FormularioParticipacion({ user_id: id_usuario, idHack: i
         if (id_hackaton) {
             fetchParticipantes();
         }
-    }, []);
+    }, [id_hackaton, id_usuario]);
 
 
     const [participacion, setParticipacion] = useState({
@@ -62,7 +69,7 @@ export default function FormularioParticipacion({ user_id: id_usuario, idHack: i
         setLoading(true);
 
         try {
-            const res = await fetch('/api/registerparticipar', {
+            const res = await fetch('http://localhost:3000/api/hackatones/participaciones', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(participacion),
@@ -73,8 +80,8 @@ export default function FormularioParticipacion({ user_id: id_usuario, idHack: i
             if (!res.ok) {
                 toast.error(data.error || 'Error al registrar participación');
             } else {
+                setTimeout(() => { location.reload() }, 1000)
                 toast.success(data.message || 'Participación registrada exitosamente ✅');
-
                 setParticipacion({
                     user_id: id_usuario,
                     username: username,
@@ -83,15 +90,19 @@ export default function FormularioParticipacion({ user_id: id_usuario, idHack: i
                     nombre_proyecto: '',
                     repositorio: '',
                 });
+
+
                 setAbierto(false);
                 setDisabled(true);
             }
         } catch (err) {
+            console.error(err);
             toast.error('Error de conexión con el servidor');
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <>

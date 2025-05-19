@@ -86,8 +86,6 @@ const HackatonCard = ({ idHack, onDeleted }: Props) => {
         return <p className="text-red-500 text-center py-10">No se encontró el hackatón.</p>;
     }
 
-    console.log(hackaton);
-
 
     return (
         <>

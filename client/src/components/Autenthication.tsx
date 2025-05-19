@@ -18,11 +18,13 @@ export default function AuthRolContenido() {
         if (roleFromMetadata) {
             setShowModal(false);
             return;
+        } else {
+            setShowModal(true);
         }
 
         const handleAuthFlow = async () => {
             try {
-                const registerRes = await fetch('/api/users', {
+                const registerRes = await fetch('http://localhost:3000/api/users', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

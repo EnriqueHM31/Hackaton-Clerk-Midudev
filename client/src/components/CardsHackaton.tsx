@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { lenguajesSelect } from '../assets/js/constantes.js';
+import { lenguajesSelect } from '../assets/js/constantes';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 
 interface Hackaton {
     id: number;
@@ -15,43 +17,62 @@ interface Hackaton {
     yaParticipa: boolean;
 }
 
-interface hackatonActive {
-    idHack: number;
+interface ParticipaciónHack {
+    hackathon_id: number;
 }
 
+
 export default function HackatonesList() {
+    const { user } = useUser();
+    const id_usuario = user?.id;
     const [visibleCount, setVisibleCount] = useState(6);
     const [filtrar, setFiltrar] = useState<string>('');
     const [isLoading, setIsLoading] = useState(true);
-    const [activo, setActivo] = useState([] as hackatonActive[]);
     const [hackatones, setHackatones] = useState([] as Hackaton[]);
 
     useEffect(() => {
-        // Simular carga de datos
-        const fetchHackatones = async () => {
+        const fetchData = async () => {
             try {
-                const res = await fetch(`http://localhost:3000/api/hackatones/all`);
-                const data = await res.json();
+                const [resParticipaciones, resHackatones] = await Promise.all([
+                    fetch(`http://localhost:3000/api/hackatones/participaciones/idusuario?idUser=${id_usuario}`),
+                    fetch(`http://localhost:3000/api/hackatones/all`),
+                ]);
 
-                if (res.ok && Array.isArray(data) && data.length > 0) {
-                    setHackatones(data);
-                }
+                if (!resParticipaciones.ok) throw new Error('Error al obtener participaciones');
+                if (!resHackatones.ok) throw new Error('Error al obtener hackatones');
+
+                const dataParticipaciones = await resParticipaciones.json();
+                const dataHackatones = await resHackatones.json();
+
+                const hackatonesConParticipacion = dataHackatones.map((hackaton: Hackaton) => {
+                    const participa = dataParticipaciones.some(
+                        (p: ParticipaciónHack) => p.hackathon_id === hackaton.id
+                    );
+                    return {
+                        ...hackaton,
+                        yaParticipa: participa
+                    };
+                });
+
+                setHackatones(hackatonesConParticipacion);
+
+
+
             } catch (error) {
                 console.error(error);
-                toast.error('Error al obtener ganadores existentes');
+                toast.error('Error al obtener datos desde el servidor');
+            } finally {
+                setIsLoading(false);
             }
         };
-        fetchHackatones();
 
-        const timer = setTimeout(() => setIsLoading(false), 500);
-        return () => clearTimeout(timer);
+        if (id_usuario) {
+            fetchData();
+        }
+    }, [id_usuario]);
 
-    }, []);
-
-    // Protección contra datos nulos/undefined
 
     // Filtrar hackatones según lenguaje
-    console.log(hackatones);
     const hackatonesFiltrados = filtrar !== '' ? hackatones.filter((h) => h.lenguajes?.includes(filtrar)) : hackatones;
 
     // Hackatones que se van a renderizar según visibleCount
@@ -80,6 +101,13 @@ export default function HackatonesList() {
         );
     }
 
+
+    function Finalizado(end_date: string) {
+        return end_date
+            ? new Date(end_date) < new Date()
+            : false;
+
+    }
 
 
     return (
@@ -132,7 +160,7 @@ export default function HackatonesList() {
                     )
                 }
                 {hackatonesVisibles.map(({ id, nombre, descripcion, start_date, end_date, lenguajes, imagen, yaParticipa }: Hackaton) => {
-                    const yaFinalizado = activo.find((a) => a.idHack === id) !== undefined;
+                    const yaFinalizado = Finalizado(end_date as string);
                     const estadoClase = yaFinalizado
                         ? 'bg-purple-900 cursor-not-allowed'
                         : yaParticipa
@@ -140,8 +168,8 @@ export default function HackatonesList() {
                             : 'bg-gray-800 cursor-pointer hover:scale-105 active:scale-95';
 
                     return (
-                        <a
-                            href={`/hackaton/${id}`}
+                        <Link
+                            to={`/hackaton/${id}`}
                             key={id}
                             className="bg-black text-white p-6 rounded-lg w-full max-w-lg font-mono card-animada shadow-xl hover:shadow-purple-600 transition-colors duration-200 z-50"
                         >
@@ -235,10 +263,9 @@ export default function HackatonesList() {
                                     </button>
                                 </div>
                             </div>
-                        </a>
+                        </Link>
                     );
                 })}
-
 
                 {visibleCount < hackatonesFiltrados.length && (
                     <div className="flex flex-col items-center justify-center py-6 w-full col-span-3">
