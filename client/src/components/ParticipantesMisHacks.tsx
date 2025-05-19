@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Participacion {
     id: number;
@@ -9,6 +10,7 @@ interface Participacion {
     github_perfil: string;
     repositorio: string;
     joined_at: string;
+    hackathon_id: number;
 }
 
 export default function ParticipantesMisHacks() {
@@ -19,7 +21,7 @@ export default function ParticipantesMisHacks() {
     useEffect(() => {
         const handleAuthFlow = async () => {
             try {
-                const resp = await fetch(`http://localhost:3000/api/hackatones/hackaton/${id_usuario}`);
+                const resp = await fetch(`http://localhost:3000/api/hackatones/participaciones/idusuario?idUser=${id_usuario}`);
                 const data = await resp.json();
                 setParticipaciones(data);
             } catch (error) {
@@ -32,16 +34,20 @@ export default function ParticipantesMisHacks() {
         }
     }, [id_usuario]); // Se vuelve a ejecutar cuando `id_usuario` esté definido
 
+    console.log(participaciones);
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-            {participaciones.map((p) => (
-                <div key={p.id} className="bg-white rounded-2xl shadow p-4 border border-gray-200 hover:shadow-lg transition">
-                    <h2 className="text-xl font-semibold mb-2">{p.nombre_proyecto}</h2>
-                    <p className="text-gray-700"><strong>Usuario:</strong> {p.username}</p>
-                    <p className="text-gray-700"><strong>GitHub:</strong> <a href={p.github_perfil} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">{p.github_perfil}</a></p>
-                    <p className="text-gray-700"><strong>Repositorio:</strong> <a href={p.repositorio} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">{p.repositorio}</a></p>
-                    <p className="text-gray-500 text-sm mt-2">Registrado el: {new Date(p.joined_at).toLocaleDateString()}</p>
-                </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 p-4 min-h-dvh max-w-laptop mx-auto">
+            {participaciones.map((p, i) => (
+                <Link to={`/hackaton/${p.hackathon_id}`} key={i} className="bg-black border border-green-400 rounded-2xl shadow p-6 hover:shadow-lg  z-50 flex flex-col gap-4 relative group justify-center hover:justify-start transition-all duration-300">
+                    <p className="text-2xl font-bold text-green-400">Tu proyecto {p.nombre_proyecto}</p>
+                    <p className="text-white text-md"><strong>Usuario: </strong>{p.username}</p>
+                    <p className="text-white text-md"><strong>Repositorio: </strong> Link del repositorio</p>
+                    <p className="text-white text-md">Registrado el: {p.joined_at}</p>
+
+                    <div className="absolute w-full h-1/2 bottom-0 left-0 bg-black/80 rounded-2xl  z-100  flex justify-center items-center transform group-hover:scale-100 scale-0 transition-transform ">
+                        <p className="text-green-400 text-2xl font-bold">Ver Hackaton</p>
+                    </div>
+                </Link>
             ))}
         </div>
     );

@@ -29,7 +29,7 @@ export default function Hero() {
 
 
             <div data-aos="zoom-in" className="absolute w-full h-auto top-1/5 flex items-end justify-center z-0 select-none">
-                <img src="/src/assets/Hero2.webp" className="w-full h-auto object-contain" alt="Imagen de fondo" />
+                <img src="/src/assets/Hero2.webp" className="w-1/2 h-auto object-contain" alt="Imagen de fondo" />
             </div>
             <div
                 data-aos="fade-up"

@@ -28,6 +28,9 @@ export default function HackatonId() {
     const [Hackaton, setHackaton] = useState<Hackaton>();
     const [isLoading, setIsLoading] = useState(true);
     const [ganadores, setGanadores] = useState<Ganador[]>([]);
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
 
     useEffect(() => {
         const fetchDatosHackaton = async () => {
@@ -59,7 +62,10 @@ export default function HackatonId() {
         if (id) {
             fetchDatosHackaton();
         }
-        setIsLoading(false);
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
 
     }, [id]);
 

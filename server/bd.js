@@ -1,13 +1,23 @@
-import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',         // Cambia si tienes otro usuario
-    password: '1234',         // Cambia si tienes contraseña
-    database: 'hackathon'  // Debes crear esta base antes
+import { Pool } from 'pg';
+
+const pool = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: Number(process.env.DB_PORT),
 });
 
-export async function query(sql, params) {
-    const [rows] = await connection.execute(sql, params);
-    return rows;
-}
+pool.connect()
+    .then(client => {
+        console.log('Conexión exitosa a la DB');
+        client.release();
+    })
+    .catch(err => {
+        console.error('Error conectando a la DB:', err);
+    });
+
+export const query = (text, params) => pool.query(text, params);

@@ -3,7 +3,6 @@ import Conocenos from './Conocenos'
 import Servicios from './Servicios'
 import Contacto from './Contacto'
 import "../assets/js/fondo.js";
-import Footer from './Footer.js'
 import Authenticacion from './Autenthication'
 
 export default function Home() {
@@ -16,7 +15,6 @@ export default function Home() {
                 <Servicios />
                 <Contacto />
             </div >
-            <Footer />
             <Authenticacion />
 
         </>
