@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 
 router.get('/all', async (req, res) => {
     try {
-        const result = await query('SELECT * FROM hackathons');
+        const result = await query('SELECT * FROM hackathons ORDER BY end_date DESC;');
         res.json(result.rows);
     } catch (error) {
         console.error(error);
@@ -88,7 +88,7 @@ router.get('/participaciones/idusuario', async (req, res) => {
             return res.json(result.rows);
         }
 
-        res.status(200).json({ message: 'No se encontró la participación' });
+        res.status(200).json(result.rows);
     } catch (error) {
         console.error('Error al obtener participación:', error);
         res.status(500).json({ error: 'Error en la base de datos' });

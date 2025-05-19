@@ -44,6 +44,7 @@ export default function HackatonesList() {
                 const dataParticipaciones = await resParticipaciones.json();
                 const dataHackatones = await resHackatones.json();
 
+
                 const hackatonesConParticipacion = dataHackatones.map((hackaton: Hackaton) => {
                     const participa = dataParticipaciones.some(
                         (p: ParticipaciónHack) => p.hackathon_id === hackaton.id
@@ -106,9 +107,7 @@ export default function HackatonesList() {
         return end_date
             ? new Date(end_date) < new Date()
             : false;
-
     }
-
 
     return (
         <main className="col-span-4 row-span-4 shadow-md flex items-center flex-col h-full z-50 gap-8 overflow-y-auto py-8 px-10">

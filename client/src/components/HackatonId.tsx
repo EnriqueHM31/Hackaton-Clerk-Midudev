@@ -64,7 +64,7 @@ export default function HackatonId() {
         }
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 1000);
+        }, 500);
         return () => clearTimeout(timer);
 
     }, [id]);
@@ -132,6 +132,7 @@ export default function HackatonId() {
                                 ganadores.length === 0 ? (
                                     <ModalParticipar
                                         idHack={idHack}
+                                        date_end={end_date as string}
                                     />
                                 ) : (
                                     <div className="flex w-fit bg-black z-50  ">
