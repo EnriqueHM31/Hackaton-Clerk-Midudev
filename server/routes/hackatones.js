@@ -228,7 +228,7 @@ router.get('/autor', async (req, res) => {
 
     try {
         const result = await query(
-            'SELECT * FROM hackathons WHERE user_id = $1',
+            'SELECT * FROM hackathons WHERE user_id = $1 ORDER BY created_at DESC;',
             [userId]
         );
 
@@ -273,6 +273,29 @@ router.post('/ganadores/register', async (req, res) => {
     } catch (error) {
         console.error('Error al registrar ganadores:', error);
         res.status(500).json({ error: 'Error al registrar ganadores: ' + error.message });
+    }
+});
+
+router.delete('/eliminar/hackaton/', async (req, res) => {
+    const { id } = req.query;
+    console.log("id", id);
+
+    if (!id) {
+        return res.status(400).json({ error: 'Falta el id del hackatón' });
+    }
+
+    try {
+        // Intentar eliminar el hackatón por id
+        const result = await query('DELETE FROM hackathons WHERE id = $1 RETURNING *', [id]);
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'Hackatón no encontrado' });
+        }
+
+        res.json({ message: 'Hackatón eliminado correctamente' });
+    } catch (error) {
+        console.error('Error al eliminar hackatón:', error);
+        res.status(500).json({ error: 'Error en la base de datos' });
     }
 });
 

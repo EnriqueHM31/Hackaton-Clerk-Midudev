@@ -59,7 +59,7 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
         if (!hackaton) return;
 
         try {
-            const res = await fetch(`/api/eliminarhack?id=${hackaton.id}`, {
+            const res = await fetch(`http://localhost:3000/api/hackatones/eliminar/hackaton?id=${hackaton.id}`, {
                 method: 'DELETE',
             });
 
@@ -75,7 +75,7 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
             setShowModal(false);
 
             setTimeout(() => {
-                window.location.href = '/organizador/hackatonesAutor';
+                window.location.href = '/hackatonesAutor';
             }, 1000);
         } catch {
             toast.error('Error al conectar con el servidor.');
@@ -83,11 +83,11 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
     };
 
     if (loading) {
-        return <p className="text-white text-center py-10">Cargando hackatón...</p>;
+        return <p className="text-center py-10 font-bold text-4xl text-pink-300 min-h-dvh">Cargando hackatón...</p>;
     }
 
     if (!hackaton) {
-        return <p className="text-red-500 text-center py-10">No se encontró el hackatón.</p>;
+        return <p className=" text-center py-10 font-bold text-4xl text-red-400 min-h-dvh">No se encontró el hackatón.</p>;
     }
 
 
@@ -98,7 +98,7 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
                     <img
                         src={hackaton.imagen}
                         alt={hackaton.nombre}
-                        className="w-full h-full object-cover rounded-md mb-4 max-h-64"
+                        className="w-full h-full object-cover rounded-md mb-4"
                     />
                 </div>
                 <div className="flex-2 flex flex-col gap-4 w-full">
@@ -117,7 +117,7 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
 
                     <div className="flex gap-4 items-center py-1">
                         <span className="text-secondary font-bold text-xl ">Duración: </span>
-                        <p className="text-lg  break-words break-all">
+                        <p className="text-lg font-bold  break-words break-all">
                             Del{' '}
                             {new Date(hackaton.fecha).toLocaleDateString('es-ES', {
                                 day: 'numeric',

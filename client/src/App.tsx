@@ -1,6 +1,6 @@
 import Home from './components/Home';
 import "./assets/js/fondo.js";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navegacion from './components/Navegacion.js';
 import Perfil from './components/Perfil.js';
 import Hackatones from './components/Hackatones.js';
@@ -48,7 +48,13 @@ function AppContent() {
         <Route path="/hackatonesAutor" element={<HackatonesAutor />} />
         <Route path="/hackatonAutor/:id/:nombre" element={<HackatonAutor />} />
 
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
+      {/* Ruta universal para redirigir rutas no definidas */}
+
+
+
       <Toaster position="bottom-center" toastOptions={{ removeDelay: 3000, style: { background: 'rgb(0,0,0)', fontSize: '1.1rem', color: '#fff', borderColor: '#48e', borderRadius: '20px', borderWidth: '3px', padding: '10px 20px' } }} />
 
 

@@ -55,7 +55,6 @@ export default function ParticipantesHackaton({ idHack }: Props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log(idHack);
             setLoading(true);
             try {
                 const [resHackaton, resParticipantes, resGanadores] = await Promise.all([
@@ -210,6 +209,10 @@ export default function ParticipantesHackaton({ idHack }: Props) {
                 return;
             }
 
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+
             toast.success(data.message || 'Ganadores guardados exitosamente');
         } catch (error) {
             console.error(error);
@@ -223,13 +226,8 @@ export default function ParticipantesHackaton({ idHack }: Props) {
     if (participantes.length === 0)
         return <p className="text-gray-300 text-2xl font-bold w-full text-center mt-6">No hay participantes inscritos aún.</p>;
 
-    console.log(ganadoresLoading);
-    console.log(ganadoresExisten);
 
     function existenGanadores(p: Participante) {
-        console.log("ganadoresLoading:", ganadoresLoading);
-        console.log("p.user_id:", p.user_id);
-        console.log("ganadoresExisten:", ganadoresExisten);
 
         if (!ganadoresLoading) return null;
 
@@ -238,7 +236,6 @@ export default function ParticipantesHackaton({ idHack }: Props) {
             : null;
 
 
-        console.log("ganador encontrado:", ganador);
         return ganador;
     }
 

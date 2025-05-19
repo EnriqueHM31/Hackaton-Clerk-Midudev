@@ -5,6 +5,11 @@ import { useParams } from 'react-router-dom';
 export default function HackatonAutorId() {
 
     const id = useParams<{ id: string }>().id;
+    const nombre = useParams<{ nombre: string }>().nombre;
+
+    if (!id && !nombre) {
+        window.location.href = '/';
+    }
     return (
         <div className="flex flex-col justify-between items-center w-full">
             <section className="gap-6 text-white w-full max-w-[1200px] mx-auto z-50 bg-black my-10">
