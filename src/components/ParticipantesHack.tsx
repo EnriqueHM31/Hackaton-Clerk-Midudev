@@ -246,8 +246,8 @@ export default function ParticipantesHackaton({ idHack }: Props) {
 
 
             {/* LISTA DE PARTICIPANTES */}
-            <section className="p-4 rounded-xl shadow-md w-full mx-auto mt-8 flex-1 text-white max-w-4xl">
-                <ul className="grid grid-cols-2 gap-x-6 gap-y-4 w-full mx-auto">
+            <section className="p-4 rounded-xl shadow-md w-full mx-auto mt-8 flex-1 text-white max-w-4xl z-50">
+                <ul className="grid xl:grid-cols-2 grid-cols-1 gap-x-6 gap-y-4 w-full mx-auto">
                     {visibles.map((p) => {
                         // Solo si ya cargaron ganadores, verificamos si este participante es ganador
                         const ganadorEncontrado = existenGanadores(p);
@@ -259,14 +259,14 @@ export default function ParticipantesHackaton({ idHack }: Props) {
                             <li key={p.id}>
                                 <div
                                     onClick={() => setSelected(p)}
-                                    className="w-full text-left p-3 border border-gray-600 rounded-md hover:bg-gray-800 transition flex justify-between items-center"
+                                    className="w-full text-left p-3 border border-gray-600 rounded-md hover:bg-gray-800 transition flex justify-between items-center gap-3 flex-col xl:flex-row"
                                 >
                                     <div>
                                         <p>
                                             <strong>Username:</strong> {p.username}
                                         </p>
                                     </div>
-                                    <div className="ml-4">
+                                    <div className="xl:ml-4">
                                         {ganadoresLoading ? (
                                             lugar ? (
                                                 <span className="text-green-400 font-bold">Ganador {lugar}</span>
@@ -309,8 +309,8 @@ export default function ParticipantesHackaton({ idHack }: Props) {
                 )}
             </section >
             {ganadoresLoading === false && (
-                <section className="bg-gray-900 p-6 rounded-xl max-w-4xl mx-auto mb-10 text-white">
-                    <h2 className="text-3xl font-bold mb-4 text-center">Ganadores asignados</h2>
+                <section className=" bg-purple-900 xl:bg-gray-900 xl:p-6 rounded-xl xl:max-w-4xl mx-auto xl:mb-10 my-6 py-4 text-white w-full xl:flex-row flex-col">
+                    <h2 className="text-lg xl:text-3xl font-bold mb-4 text-center">Ganadores asignados</h2>
                     {ganadores.length === 0 && (
                         <p className="text-gray-400 text-center">No hay ganadores asignados aún.</p>
                     )}
@@ -322,22 +322,25 @@ export default function ParticipantesHackaton({ idHack }: Props) {
                             className="space-y-4"
                         >
                             {ganadores.map(({ lugar, participante }) => (
-                                <div key={participante.id} className="flex items-center gap-4">
+                                <div key={participante.id} className="flex items-center gap-4 flex-col xl:flex-row">
                                     <label className="w-24 font-semibold">Ganador {lugar}:</label>
-                                    <input
-                                        type="text"
-                                        readOnly
-                                        value={participante.username}
-                                        className="flex-1 bg-gray-800 text-white rounded px-3 py-2 cursor-not-allowed"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => quitarGanador(participante.user_id)}
-                                        className="ml-2 px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-white font-semibold"
-                                        title="Quitar ganador"
-                                    >
-                                        X
-                                    </button>
+                                    <div className='w-full flex px-4 gap-2'>
+
+                                        <input
+                                            type="text"
+                                            readOnly
+                                            value={participante.username}
+                                            className="flex-1 bg-gray-800 text-white rounded px-3 py-2 cursor-not-allowed"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => quitarGanador(participante.user_id)}
+                                            className="ml-2 px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-white font-semibold"
+                                            title="Quitar ganador"
+                                        >
+                                            X
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
 
@@ -392,12 +395,14 @@ export default function ParticipantesHackaton({ idHack }: Props) {
                     </div>
                 )
             }
+            <section className='z-[100] xl:max-h-full'>
 
-            {
-                selected && (
-                    <CardPartipanteProyecto selected={selected} setSelected={setSelected} formatearFecha={formatearFecha} />
-                )
-            }
+                {
+                    selected && (
+                        <CardPartipanteProyecto selected={selected} setSelected={setSelected} formatearFecha={formatearFecha} />
+                    )
+                }
+            </section>
         </>
     );
 };

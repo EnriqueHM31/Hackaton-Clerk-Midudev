@@ -36,7 +36,7 @@ export default function PreviewCard({
     }, [imagen]);
 
     return (
-        <div className="flex-1 bg-black z-50 p-5 rounded-2xl h-fit max-w-1/2">
+        <div className="flex-1 z-50 p-2 xl:p-5 rounded-2xl h-fit max-w-full xl:max-w-1/2">
             <h2 className="text-2xl font-bold text-green-400">Previsualización</h2>
             <div className="bg-black p-6 rounded-lg w-full font-mono shadow-xl z-50 ">
                 <div className="flex justify-between items-center bg-black z-50">

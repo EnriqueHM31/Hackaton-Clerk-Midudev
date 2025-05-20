@@ -8,7 +8,7 @@ import LOGO from "../assets/logo.webp";
 export default function Footer() {
     return (
 
-        <footer className={`w-full flex flex-col items-center justify-center gap-10 overflow-hidden bg-black z-50`}>
+        <footer className={`w-full flex flex-col items-center justify-center gap-10 overflow-hidden bg-black z-40`}>
             <div className="flex justify-between items-center mx-auto w-full h-full xl:py-6 py-9 bg-black z-50">
                 <div
                     className="flex xl:justify-between xl:flex-row flex-col justify-center items-center mx-auto w-full max-w-[1200px] h-full xl:gap-0 gap-10"

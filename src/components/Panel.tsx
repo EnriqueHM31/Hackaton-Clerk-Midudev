@@ -147,7 +147,7 @@ export default function HackathonForm() {
 
     return (
         <>
-            <div className="p-8 rounded-2xl shadow-lg w-full mb-16 flex gap-10 relative justify-center items-center">
+            <div className="xl:p-8 p-2 rounded-2xl shadow-lg w-full mb-16 flex gap-10 relative justify-center items-center flex-col xl:flex-row">
                 {/* Formulario */}
                 <div className="flex-1 bg-black z-50 p-5 rounded-2xl shadow-lg">
                     <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-pink-400 to-secondary">

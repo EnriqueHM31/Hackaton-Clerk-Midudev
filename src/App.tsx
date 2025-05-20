@@ -34,7 +34,7 @@ function AppContent() {
 
       <div className="overflow-hidden">
         <div
-          className="fixed top-0 left-0 w-full h-full z-0"
+          className="fixed top-0 left-0 w-full h-full -z-0"
           id="fondo"
         ></div>
       </div>

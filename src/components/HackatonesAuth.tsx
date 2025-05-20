@@ -56,15 +56,15 @@ const HackatonList = () => {
 
     return (
 
-        <section className="grid_hackatones min-h-screen mb-10 z-50 w-full">
+        <section className="grid_hackatones min-h-screen mb-10 z-50 w-full ">
             {hackatonesVisibles.map(({ id, nombre, descripcion, start_date, end_date, lenguajes, imagen }) => (
 
                 <Link
                     key={id}
                     to={`/hackatonAutor/${id}/${nombre}`}
-                    className={`bg-black ${hackatones.length < 2 ? 'max-w-2/6' : ''} text-white p-10 px-6 rounded-lg w-full font-mono card-animada shadow-xl transition-colors duration-200 z-50 min-h-[580px] max-h-[580px]`}
+                    className={`bg-black ${hackatones.length < 2 ? 'xl:max-w-2/6' : ''} text-white xl:p-10 p-6 rounded-lg xl:w-full font-mono card-animada shadow-xl transition-colors duration-200 z-50 min-h-[580px] max-h-[580px] mx-3 border border-white xl:0border-black`}
                 >
-                    <div className="w-full">
+                    <div className="xl:w-full">
                         <div className="flex justify-between items-center z-50">
                             <div className="flex space-x-2 text-red-500">
                                 <div className="w-3 h-3 rounded-full bg-red-500" />

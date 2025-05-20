@@ -102,7 +102,7 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
 
     return (
         <>
-            <div className="relative p-4 rounded-xl w-full my-4 z-50 flex gap-5 text-white max-w-full">
+            <div className="relative p-4 rounded-xl w-full my-4 z-50 flex gap-5 text-white max-w-full xl:flex-row flex-col">
                 <div className="flex-1 w-full">
                     <img
                         src={hackaton.imagen}
@@ -110,21 +110,21 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
                         className="w-full h-full object-cover rounded-md mb-4"
                     />
                 </div>
-                <div className="flex-2 flex flex-col gap-4 w-full max-w-4/6">
-                    <div className="flex gap-3 items-center justify-between">
-                        <div className="flex gap-3 items-center w-full max-w-2/3">
+                <div className="flex-2 flex flex-col gap-4 w-full max-w-full xl:max-w-4/6">
+                    <div className="flex gap-3 items-center justify-between flex-col xl:flex-row">
+                        <div className="flex gap-3 items-center w-full xl:max-w-2/3 order-2 xl:order-1">
                             <span className="text-secondary font-bold text-xl ">Nombre: </span>
                             <h2 className="text-lg font-bold  break-words break-all line-clamp-1 max-w-2/3 w-full">{hackaton.nombre}</h2>
                         </div>
                         <button
                             onClick={() => setShowModal(true)}
-                            className="px-4 py-2 bg-red-600 hover:bg-red-700  font-semibold rounded-lg"
+                            className="px-4 py-2 bg-red-600 hover:bg-red-700  font-semibold rounded-lg order-1 xl:order-2s"
                         >
                             Eliminar Hackatón
                         </button>
                     </div>
 
-                    <div className="flex gap-4 items-center py-1">
+                    <div className="flex gap-4 xl:items-center py-1 xl:flex-row flex-col ">
                         <span className="text-secondary font-bold text-xl ">Duración: </span>
                         <p className="text-lg font-bold  break-words break-all">
                             Del{' '}
@@ -142,7 +142,7 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
                         </p>
                     </div>
 
-                    <div className="flex gap-4 items-center py-1">
+                    <div className="flex gap-4 xl:items-center py-1 xl:flex-row flex-col">
                         <span className="text-secondary font-bold text-xl ">Lenguajes: </span>
                         <p className="text-lg  font-bold break-words break-all">
                             {Array.isArray(hackaton.lenguajes)

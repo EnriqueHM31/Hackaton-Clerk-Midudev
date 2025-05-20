@@ -27,8 +27,9 @@
 
 .grid_hackatones {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  grid-gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
 }
 
 /* styles.css o en tu <style> */
