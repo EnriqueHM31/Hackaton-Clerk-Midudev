@@ -26,17 +26,17 @@ export default function Footer() {
                     <div className="flex gap-3 xl:order-2 order-1 z-50">
                         <a
                             className="size-10 rounded-full bg-black flex items-center justify-center hover:border-secondary transition-colors hover:shadow-secondary hover:shadow-lg border border-white/50"
-                            href="/"><img src={ICONFACEBOOK} loading="lazy" alt="Icono para facebook" />
+                            href="https://github.com/EnriqueHM31"><img src={ICONFACEBOOK} loading="lazy" alt="Icono para facebook" />
                         </a>
                         <a
                             className="size-10 rounded-full bg-black flex items-center justify-center hover:border-secondary transition-colors hover:shadow-secondary hover:shadow-lg border border-white/50"
-                            href="/"><img src={ICONLINKEDIN} loading="lazy" alt="Icono para linkedin" /></a>
+                            href="https://github.com/EnriqueHM31"><img src={ICONLINKEDIN} loading="lazy" alt="Icono para linkedin" /></a>
                         <a
                             className="size-10 rounded-full bg-black flex items-center justify-center hover:border-secondary transition-colors hover:shadow-secondary hover:shadow-lg border border-white/50"
-                            href="/"><img src={ICONTWITTER} loading="lazy" alt="Icono para twitter" /></a>
+                            href="https://github.com/EnriqueHM31"><img src={ICONTWITTER} loading="lazy" alt="Icono para twitter" /></a>
                         <a
                             className="size-10 rounded-full bg-black flex items-center justify-center hover:border-secondary transition-colors hover:shadow-secondary hover:shadow-lg border border-white/50"
-                            href="/"><img src={ICONYOUTUBE} loading="lazy" alt="Icono para youtube" /></a>
+                            href="https://github.com/EnriqueHM31"><img src={ICONYOUTUBE} loading="lazy" alt="Icono para youtube" /></a>
                     </div>
                 </div>
             </div>
