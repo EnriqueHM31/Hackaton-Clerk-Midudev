@@ -10,8 +10,8 @@ export default function HackathonForm() {
     const API = import.meta.env.VITE_API_URL;
     const { user } = useUser();
     const id_usuario = user?.id;
-    const preset_name = "DevArena"
-    const cloud_name = "dovznesem"
+    const preset_name = import.meta.env.VITE_CLOUD_PRESENT;
+    const cloud_name = import.meta.env.VITE_CLOUD_NAME;
 
 
     const [formData, setFormData] = useState({
