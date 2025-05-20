@@ -1,4 +1,7 @@
 import ContactForm from './ContactoForm';
+import CONTACT from "../assets/Contact.webp";
+
+
 export default function Contacto() {
     return (
 
@@ -19,7 +22,7 @@ export default function Contacto() {
                 <ContactForm />
             </div>
             <div className="flex-1 relative items-center justify-center xl:flex hidden" data-aos="fade-left" data-aos-delay="100">
-                <img src="/src/assets/Contact.webp" className="w-full h-auto" alt="Imagen de fondo" loading="lazy" />
+                <img src={CONTACT} className="w-full h-auto" alt="Imagen de fondo" loading="lazy" />
             </div>
         </section>
 

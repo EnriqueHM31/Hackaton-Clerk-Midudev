@@ -1,3 +1,6 @@
+import HERO from "../assets/Hero.webp";
+import HERO2 from "../assets/Hero2.webp";
+
 export default function Hero() {
     return (
         <section className="relative  xl:h-dvh w-full overflow-hidden flex flex-col items-center justify-center xl:mb-20">
@@ -29,7 +32,7 @@ export default function Hero() {
 
 
             <div data-aos="zoom-in" className="absolute w-full h-auto top-1/5 flex items-end justify-center z-0 select-none">
-                <img src="/src/assets/Hero2.webp" className="w-1/2 h-auto object-contain" alt="Imagen de fondo" />
+                <img src={HERO2} className="w-1/2 h-auto object-contain" alt="Imagen de fondo" />
             </div>
             <div
                 data-aos="fade-up"
@@ -37,7 +40,7 @@ export default function Hero() {
                 className="absolute w-full h-full flex items-center justify-center select-none"
             >
                 <img
-                    src="/src/assets/Hero.webp"
+                    src={HERO}
                     className="w-full h-auto object-contain opacity-25 -rotate-12 z-0"
                     alt="Imagen de fondo"
                 />

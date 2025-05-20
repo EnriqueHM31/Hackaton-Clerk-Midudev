@@ -7,6 +7,7 @@ import {
     UserButton,
     useUser,
 } from "@clerk/clerk-react";
+import ICONOPROGRAMADOR from "../assets/IconProgramador.webp";
 
 
 
@@ -38,7 +39,7 @@ export default function BotonPerfil() {
                         className="text-white px-4 py-2 font-bold rounded-2xl flex items-center gap-2 transition-colors"
                     >
                         <img
-                            src="/src/assets/IconProgramador.webp"
+                            src={ICONOPROGRAMADOR}
                             alt="Icono de programador"
                             className="w-full h-full object-contain"
                         />

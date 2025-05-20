@@ -1,7 +1,13 @@
+import ABOUT from "../assets/about.webp";
+import LOGO from "../assets/logo.webp";
+import DESAFIOS from "../assets/desafios.webp";
+import PREMIOS from "../assets/premios.webp";
+import COMUNIDAD from "../assets/comunidad.webp";
+
 const BENEFICIOS = [
-    { beneficio: 'Desafios', url: '/src/assets/desafios.webp' },
-    { beneficio: 'Premios', url: '/src/assets/premios.webp' },
-    { beneficio: 'Comunidad', url: '/src/assets/comunidad.webp' },
+    { beneficio: 'Desafios', url: DESAFIOS },
+    { beneficio: 'Premios', url: PREMIOS },
+    { beneficio: 'Comunidad', url: COMUNIDAD },
 ];
 
 const colspan = (index: number) => {
@@ -31,14 +37,14 @@ export default function Conocenos() {
             </div>
             <div className="w-full flex flex-col xl:flex-row items-center justify-center gap-8">
                 <div className="flex-1 relative" data-aos="fade-right" data-aos-delay="200">
-                    <img src="/src/assets/about.webp" className="w-full h-auto object-contain" alt="Imagen de fondo" />
+                    <img src={ABOUT} className="w-full h-auto object-contain" alt="Imagen de fondo" />
 
                     <div
                         className="absolute inset-0 items-end justify-center z-10 select-none bg-gradient-to-t from-black to-30% to-black/30 xl:flex hidden"
                     >
                         <div className="flex items-center gap-1 mb-3">
                             <img
-                                src="/src/assets/Logo.webp"
+                                src={LOGO}
                                 className="size-14 object-contain"
                                 alt="Logo de la empresa DevArena"
                                 loading="lazy"

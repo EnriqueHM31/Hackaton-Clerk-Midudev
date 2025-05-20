@@ -2,6 +2,9 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import BotonPerfil from './BotonPerfil';
 import { useUser } from '@clerk/clerk-react';
+import ICONCLOSE from "../assets/IconClose.webp";
+import ICONOMENU from "../assets/menu.webp";
+import LOGO from "../assets/logo.webp";
 
 const LINKS = [
     { texto: 'Home', url: '/' },
@@ -64,8 +67,8 @@ export default function Navegacion() {
             menu.classList.toggle('pointer-events-none', !isOpen);
 
             img.src = isOpen
-                ? '/src/assets/IconClose.webp'
-                : '/src/assets/menu.webp';
+                ? ICONCLOSE
+                : ICONOMENU;
 
             if (auth) {
                 auth.classList.toggle('translate-y-0', isOpen);
@@ -98,7 +101,7 @@ export default function Navegacion() {
                         <div className="flex h-full gap-2 items-center">
                             <img
                                 className="w-full h-full object-contain z-50"
-                                src="/src/assets/logo.webp"
+                                src={LOGO}
                                 alt="Logo de la empresa DevArena"
                             />
                             <h2 className="text-2xl font-bold z-50 xl:flex hidden">DevArena</h2>
