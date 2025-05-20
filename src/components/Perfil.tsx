@@ -2,7 +2,7 @@ import { UserProfile } from '@clerk/clerk-react'
 
 export default function Perfil() {
     return (
-        <section className="mt-20 flex items-center justify-center xl:py-16 py-9 w-full h-screen">
+        <section className="mt-20 flex items-center justify-center xl:py-16 py-9 w-full h-screen my-10 xl:my-0">
             <UserProfile
                 appearance={{
                     variables: {
@@ -135,7 +135,6 @@ export default function Perfil() {
 
                         // Navbar (pestañas de perfil/seguridad)
                         navbar: {
-                            backgroundColor: '#fff',
                             border: 'none',
                             gap: '2rem',
                         },

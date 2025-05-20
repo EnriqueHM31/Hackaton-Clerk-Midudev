@@ -49,7 +49,7 @@ export default function BotonPerfil() {
                     {open && (
                         <div
                             id="menu-perfil"
-                            className="absolute top-full right-1/12 mt-2 bg-black/80 backdrop-blur-sm rounded-xl p-4 flex flex-col gap-4 w-64 z-50"
+                            className="absolute top-full xl:right-1/12 right-0 xl:mt-2 bg-black/70 backdrop-blur-sm rounded-xl p-4 flex flex-col gap-4 w-64 z-50"
                         >
                             <div className="flex flex-col items-start gap-3">
                                 <div className="flex items-center gap-3">
@@ -67,7 +67,7 @@ export default function BotonPerfil() {
                 </>
             ) : (
                 <SignedOut>
-                    <div className="flex gap-2">
+                    <div className="flex xl:flex-row flex-col xl:mt-0 gap-6 xl:gap-4 p-4 rounded-2xl xl:p-0 xl:rounded-none ">
                         <SignUpButton mode="modal">
                             <button className="bg-black text-blue-300 px-4 py-2 font-bold rounded-xl border border-primary">
                                 Registrarse

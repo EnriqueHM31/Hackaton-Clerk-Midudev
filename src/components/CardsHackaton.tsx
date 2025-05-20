@@ -132,13 +132,13 @@ export default function HackatonesList() {
     }
 
     return (
-        <main className="col-span-4 row-span-4 shadow-md flex items-center flex-col h-full z-50 gap-8 overflow-y-auto py-8 px-10">
-            <div className="flex items-center justify-between w-full" data-aos="zoom-in" data-aos-delay="100">
-                <h2 className="w-full text-start text-6xl font-bold bg-clip-text bg-gradient-to-r from-blue-300 via-pink-400 to-secondary text-transparent py-4">
+        <main className=" shadow-md flex items-center flex-col xl:h-full z-50 gap-8 py-8 px-10 w-full">
+            <div className="flex items-center flex-col xl:flex-row justify-between w-full " data-aos="zoom-in" data-aos-delay="100">
+                <h2 className="w-full text-center xl:text-start text-4xl xl:text-6xl font-bold bg-clip-text bg-gradient-to-r from-blue-300 via-pink-400 to-secondary text-transparent py-4">
                     Hackatones
                 </h2>
 
-                <div className="w-full flex gap-6 items-center justify-end">
+                <div className="w-full flex gap-6 items-center xl:justify-end justify-center flex-col xl:flex-row">
                     <label className="text-white font-semibold flex items-center justify-center" htmlFor="lenguajes">
                         Filtrar por lenguaje:
                     </label>
@@ -164,13 +164,13 @@ export default function HackatonesList() {
             </div>
 
             <div
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-20 w-full z-50"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:gap-x-4 gap-y-20 w-full z-50"
                 id="hackatones"
             >
 
                 {
                     hackatonesFiltrados.length === 0 && (
-                        < div className="col-span-4 row-span-4 flex items-center justify-center">
+                        < div className="col-span-4 row-span-4 flex items-center justify-center w-full">
                             <p className="text-white text-4xl font-bold bg-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-400 to-secondary">
                                 {filtrar
                                     ? `No hay hackatones con el lenguaje ${lenguajesSelect.find((l: { value: string; label: string; }) => l.value === filtrar)?.label || filtrar
@@ -192,7 +192,7 @@ export default function HackatonesList() {
                         <Link
                             to={`/hackaton/${id}`}
                             key={id}
-                            className=" text-white rounded-2xl w-full max-w-lg font-mono card-animada shadow-xl hover:shadow-purple-500 transition-colors duration-200 z-50 px-8 bg-black"
+                            className=" text-white rounded-2xl w-full xl:max-w-lg font-mono card-animada shadow-xl hover:shadow-purple-500 transition-colors duration-200 z-50 px-8 bg-black"
                         >
                             <div className="flex justify-between items-center z-50 mt-6">
                                 <div className="flex space-x-2 text-red-500">

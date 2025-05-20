@@ -126,7 +126,7 @@ export default function ParticipantesMisHacks() {
 
     return (
         <section className="flex flex-col items-center justify-center gap-6 w-full">
-            <h2 className="text-center text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-pink-400 to-secondary">
+            <h2 className="text-center text-2xl xl:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-pink-400 to-secondary">
                 Tus Hackatones
             </h2>
 
@@ -135,11 +135,11 @@ export default function ParticipantesMisHacks() {
                     const colores = Ganaste(p.ganaste);
 
                     return (
-                        <div className="relative w-full group h-fit">
+                        <div className="relative w-full group h-fit ">
                             <Link
                                 to={`/hackaton/${p.hackathon_id}`}
                                 key={i}
-                                className={`shadow-lg bg-black border rounded-2xl p-6 hover:shadow-lg z-50 flex flex-col gap-4 relative justify-start transition-all duration-300 min-h-80 max-h-80 ${colores.contenedor
+                                className={`shadow-lg bg-black border rounded-2xl p-6 hover:shadow-lg z-50 flex flex-col gap-4 relative justify-center xl:justify-start transition-all duration-300 min-h-80 max-h-80 ${colores.contenedor
                                     } border-${colores.texto.split("-")[1]}-400`}
                             >
                                 <p className={`text-3xl font-bold break-words break-all line-clamp-1 ${colores.texto}`}>
@@ -160,17 +160,17 @@ export default function ParticipantesMisHacks() {
                             </Link>
 
                             <div
-                                className="absolute w-full h-1/2 bottom-0 left-0 bg-black/80 rounded-2xl z-50 flex justify-center items-center transform group-hover:scale-100 scale-0 transition-transform"
+                                className="absolute w-full h-1/2 bottom-0 left-0 bg-black/70 rounded-2xl z-50 flex justify-center items-center transform xl:group-hover:scale-100 xl:scale-0 transition-transform "
                                 onClick={(e) => e.stopPropagation()} // Evita que el clic se propague al Link
                             >
                                 <div
-                                    className={`${colores.text_mensaje} text-xl font-bold flex items-center justify-center px-6 text-wrap flex-col`}
+                                    className={`${colores.text_mensaje} text-xl font-bold flex items-center justify-center px-6 text-wrap flex-col gap-4`}
                                 >
                                     {
                                         p.correo && p.ganaste ? (
                                             <>
 
-                                                <p>¡Ya ganaste este hackatón! 🎉</p>
+                                                <p className="text-center">¡Ya ganaste este hackatón! 🎉</p>
                                                 <div
                                                     className="text-sm hover:underline hover:text-pink-300"
                                                     onClick={() => copiarEmail(p.correo ?? "")} // También evita propagación en el clic

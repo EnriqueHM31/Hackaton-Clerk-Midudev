@@ -1,5 +1,6 @@
 import HERO from "../assets/Hero.webp";
 import HERO2 from "../assets/Hero2.webp";
+import { SignInButton } from "@clerk/clerk-react";
 
 export default function Hero() {
     return (
@@ -20,14 +21,15 @@ export default function Hero() {
                     competencias de desarrollo. DevArena crea un espacio competitivo, colaborativo y dinámico donde las ideas se
                     transforman en soluciones reales.
                 </p>
-                <a
-                    data-aos="fade-up"
-                    data-aos-delay="800"
-                    href="/"
-                    className="bg-primary px-6 py-3 rounded-2xl font-bold z-40 hover:bg-blue-700 transition-colors"
-                >
-                    Get Started
-                </a>
+                <SignInButton mode="modal">
+                    <button
+                        data-aos="fade-up"
+                        data-aos-delay="800"
+                        className="bg-primary px-6 py-3 rounded-2xl font-bold z-40 hover:bg-blue-700 transition-colors"
+                    >
+                        Get Started
+                    </button>
+                </SignInButton>
             </section>
 
 

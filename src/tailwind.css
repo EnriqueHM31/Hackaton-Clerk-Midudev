@@ -8,8 +8,8 @@
 
 .circulo {
   border-radius: 100%;
-  width: clamp(12rem, 20vw, 16rem);
-  height: clamp(12rem, 20vw, 16rem);
+  width: clamp(14rem, 23vw, 16rem);
+  height: clamp(14rem, 23vw, 16rem);
   filter: blur(200px);
   pointer-events: none;
   animation: flotar 1s infinite both alternate;

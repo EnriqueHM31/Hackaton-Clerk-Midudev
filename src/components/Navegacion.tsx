@@ -52,8 +52,9 @@ export default function Navegacion() {
         const menu = document.getElementById('mobile-menu');
         const img = menuButton?.querySelector('img');
         const auth = document.getElementById('mobile-auth');
+        const botonperfil = document.getElementById('botonperfil');
 
-        if (!menuButton || !menu || !img) return;
+        if (!menuButton || !menu || !img || !botonperfil) return;
 
         let isOpen = false;
 
@@ -65,6 +66,8 @@ export default function Navegacion() {
             menu.classList.toggle('opacity-0', !isOpen);
             menu.classList.toggle('pointer-events-auto', isOpen);
             menu.classList.toggle('pointer-events-none', !isOpen);
+            botonperfil.classList.toggle('hidden', !isOpen);
+            botonperfil.classList.toggle('flex', isOpen);
 
             img.src = isOpen
                 ? ICONCLOSE
@@ -95,7 +98,7 @@ export default function Navegacion() {
                 id="inicio"
             >
 
-                <div className="max-w-[1250px] mx-auto flex justify-between items-center py-3">
+                <div className="max-w-[1250px] mx-auto flex justify-between items-center py-3 relative">
                     {/* Logo */}
                     <div className="flex items-center justify-start gap-2 h-12 flex-1">
                         <div className="flex h-full gap-2 items-center">
@@ -111,10 +114,10 @@ export default function Navegacion() {
                     {/* Navegación */}
                     <nav
                         id="mobile-menu"
-                        className="flex-col gap-12 items-center justify-center flex-2
-                    fixed top-1/2 left-1/2 -translate-x-1/2 xl:-translate-x-0 w-11/12 backdrop-blur-sm z-40
+                        className="flex-col gap-12 items-center justify-center flex-2 bg-black/70 xl:bg-transparent
+                    fixed top-1/2 left-1/2 -translate-x-1/2 xl:-translate-x-0 w-11/12  z-40
                     transform transition-transform duration-500 ease-in-out
-                    -translate-y-44 opacity-0 pointer-events-none
+                    -translate-y-44 opacity-0 pointer-events-none backdrop-blur-3xl
                     xl:static xl:flex-row xl:items-center xl:transparent xl:backdrop-blur-2xl
                     xl:translate-y-0 xl:opacity-100 xl:pointer-events-auto
                     flex xl:flex py-6 xl:py-0 mt-48 xl:mt-0 xl:mx-0 mx-auto rounded-2xl xl:rounded-none xl:justify-center"
@@ -133,7 +136,7 @@ export default function Navegacion() {
                     </nav>
 
                     {/* Botón de Perfil */}
-                    <div className="flex items-center justify-end gap-6 h-12 flex-1 z-50">
+                    <div id='botonperfil' className="xl:flex items-center justify-end gap-6 min-h-12 flex-1 z-50 hidden absolute xl:static w-full bg-black flex-col xl:flex-row xl:bg-transparent top-11/12 rounded-2xl xl:rounded-none">
                         <BotonPerfil />
                     </div>
 

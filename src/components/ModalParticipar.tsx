@@ -117,13 +117,13 @@ export default function FormularioParticipacion({ idHack: id_hackaton, date_end 
 
             {finalizoHack ? (
                 <div className="flex w-fit bg-black z-50">
-                    <p className="text-4xl font-bold bg-red-500 px-6 py-3 rounded-3xl">
+                    <p className="textlg xl:text-4xl font-bold bg-red-500 px-6 py-3 rounded-3xl">
                         El hackatón ha finalizado
                     </p>
                 </div>
             ) : participacionActiva ? (
                 <div className="flex w-fit bg-black z-50">
-                    <p className="text-4xl font-bold bg-blue-500 px-6 py-3 rounded-3xl">
+                    <p className="textlg xl:text-4xl font-bold bg-blue-500 px-6 py-3 rounded-3xl">
                         Ya estás participando
                     </p>
                 </div>
@@ -138,15 +138,15 @@ export default function FormularioParticipacion({ idHack: id_hackaton, date_end 
 
             {
                 abierto && (
-                    <div className="fixed inset-0 bg-black/60  flex items-center justify-center px-4 z-[1000]">
-                        <div className="bg-gray-900 text-white p-8 rounded-2xl shadow-lg w-full max-w-lg relative flex flex-col gap-6">
+                    <div className="fixed inset-0 bg-black/60  flex items-center justify-center px-4 z-[1000] ">
+                        <div className="bg-gray-900 text-white p-8 rounded-2xl shadow-lg w-full max-w-lg relative flex flex-col gap-3 xl:gap-6 xl:max-h-full max-h-3/4">
                             <button
                                 onClick={() => setAbierto(false)}
                                 className="absolute top-2 right-2 text-white text-5xl font-bold hover:text-pink-500"
                             >
                                 ×
                             </button>
-                            <h2 className="text-3xl font-bold">Formulario de participación</h2>
+                            <h2 className="text-lg xl:text-3xl font-bold">Formulario de participación</h2>
                             <p className='text-sm text-white/50 font-bold'>Si es un equipo, escribe el GitHub del líder</p>
 
                             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -154,7 +154,7 @@ export default function FormularioParticipacion({ idHack: id_hackaton, date_end 
                                     name="github_perfil"
                                     type="url"
                                     placeholder="Perfil de GitHub (https://github.com/usuario)"
-                                    className="p-3 rounded bg-gray-800 text-white"
+                                    className="p-2 xl:p-3 rounded bg-gray-800 text-white"
                                     required
                                     value={participacion.github_perfil}
                                     onChange={handleChange}
@@ -164,7 +164,7 @@ export default function FormularioParticipacion({ idHack: id_hackaton, date_end 
                                     name="nombre_proyecto"
                                     type="text"
                                     placeholder="Nombre del proyecto"
-                                    className="p-3 rounded bg-gray-800 text-white"
+                                    className="p-2 xl:p-3 rounded bg-gray-800 text-white"
                                     required
                                     value={participacion.nombre_proyecto}
                                     onChange={handleChange}
@@ -174,7 +174,7 @@ export default function FormularioParticipacion({ idHack: id_hackaton, date_end 
                                     name="repositorio"
                                     type="url"
                                     placeholder="Link del repositorio del proyecto"
-                                    className="p-3 rounded bg-gray-800 text-white"
+                                    className="p-2 xl:p-3 rounded bg-gray-800 text-white"
                                     required
                                     value={participacion.repositorio}
                                     onChange={handleChange}
@@ -185,11 +185,11 @@ export default function FormularioParticipacion({ idHack: id_hackaton, date_end 
                                     !disabled ? <button
                                         type="submit"
                                         disabled={loading}
-                                        className='bg-blue-600 text-white px-6 py-3 rounded-2xl font-bold w-fit mx-auto mt-6'
+                                        className='bg-blue-600 text-white px-2 xl:px-6 py-3 rounded-2xl font-bold w-full xl:w-fit mx-auto mt-6'
                                     >
                                         {loading ? 'Registrando...' : 'Registrar Participación'}
                                     </button> : <div
-                                        className='bg-blue-600 text-white  rounded-2xl font-bold w-fit mx-auto mt-6 px-6 py-3 '
+                                        className='bg-blue-600 text-white  rounded-2xl font-bold w-full xl:w-fit mx-auto mt-6 px-2 xl:px-6 py-3 '
                                     >
                                         Participando
                                     </div>

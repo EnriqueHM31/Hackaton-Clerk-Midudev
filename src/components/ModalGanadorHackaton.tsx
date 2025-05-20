@@ -60,11 +60,11 @@ export default function ModalGanadorHackaton({ user_id, idHack, lugar, }: { user
             {/* Modal */}
             {modalOpen && (
                 <div
-                    className="fixed inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/50 z-50 flex justify-center items-center"
+                    className="fixed inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/50 z-50 flex justify-center items-center px-5 xl:px-0"
                     onClick={() => setModalOpen(false)} // Cierra modal al hacer click fuera
                 >
-                    <div
-                        className="bg-gray-900 rounded-xl p-6 w-full max-w-1/2 text-white shadow-xl border border-gray-700"
+                    <article
+                        className="bg-gray-900 rounded-xl p-6 w-full xl:max-w-1/2 text-white shadow-xl border border-gray-700 max-h-dvh"
                         onClick={(e) => e.stopPropagation()} // Evita cierre al hacer click dentro
                     >
                         {/* Botón cerrar */}
@@ -97,26 +97,26 @@ export default function ModalGanadorHackaton({ user_id, idHack, lugar, }: { user
                                     </div>
                                     <div className="card__content flex flex-col gap-2">
                                         <div className="mx-auto flex justify-center items-center bg-black px-6 py-3 rounded-2xl w-fit">
-                                            <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-pink-400 to-secondary ">Ganador {lugar}</h2>
+                                            <h2 className="text-lg xl:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-pink-400 to-secondary ">Ganador {lugar}</h2>
                                         </div>
                                         <div className="card__body flex flex-col gap-2">
                                             <div className="flex flex-col gap-2">
-                                                <p className="text-2xl text-pink-400 font-bold">Proyecto:</p>
-                                                <span className="text-xl">{ganador.nombre_proyecto}</span>
+                                                <p className="text-md xl:text-2xl text-pink-400 font-bold">Proyecto:</p>
+                                                <span className="text-sm xl:text-xl">{ganador.nombre_proyecto}</span>
                                             </div>
                                             <div className="flex flex-col gap-2">
-                                                <p className="text-2xl text-pink-400 font-bold">Nombre de usuario:</p>
-                                                <span className="text-xl">{ganador.username}</span>
+                                                <p className="text-md xl:text-2xl text-pink-400 font-bold">Nombre de usuario:</p>
+                                                <span className="text-sm xl:text-xl">{ganador.username}</span>
                                             </div>
                                             <div className="flex flex-col gap-2">
-                                                <p className="text-2xl text-pink-400 font-bold">Github:</p>
-                                                <a className="text-xl hover:text-blue-400 text-white transition-colors break-words break-all" href={ganador.github_perfil} target="_blank" rel="noopener noreferrer">
+                                                <p className="text-md xl:text-2xl text-pink-400 font-bold">Github:</p>
+                                                <a className="text-sm xl:text-xl hover:text-blue-400 text-white transition-colors break-words break-all" href={ganador.github_perfil} target="_blank" rel="noopener noreferrer">
                                                     {ganador.github_perfil}
                                                 </a>
                                             </div>
                                             <div className="flex flex-col gap-2">
-                                                <p className="text-2xl text-pink-400 font-bold">Repositorio:</p>
-                                                <a className="text-xl hover:text-blue-400 text-white transition-colors break-words break-all" href={ganador.repositorio} target="_blank" rel="noopener noreferrer">
+                                                <p className="text-md xl:text-2xl text-pink-400 font-bold">Repositorio:</p>
+                                                <a className="text-sm xl:text-xl hover:text-blue-400 text-white transition-colors break-words break-all" href={ganador.repositorio} target="_blank" rel="noopener noreferrer">
                                                     {ganador.repositorio}
                                                 </a>
                                             </div>
@@ -128,7 +128,7 @@ export default function ModalGanadorHackaton({ user_id, idHack, lugar, }: { user
                             ))
                         )}
                         {/* Botón para enviar ganadores */}
-                    </div>
+                    </article>
                 </div >
             )
             }

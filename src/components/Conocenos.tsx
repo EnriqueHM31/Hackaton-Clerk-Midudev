@@ -19,7 +19,7 @@ const colspan = (index: number) => {
 export default function Conocenos() {
     return (
 
-        <section id="about" className="overflow-hidden flex flex-col items-center justify-center gap-8 xl:py-40 py-20">
+        <section id="about" className="overflow-hidden flex flex-col items-center justify-center gap-8 xl:py-40 py-20 my-10 xl:my-0">
             <div className="grid gap-6 grid-cols-2 md:grid-cols-3 xl:mt-5 xl:pb-8">
                 {
                     BENEFICIOS.map(({ beneficio, url }, i) => (
