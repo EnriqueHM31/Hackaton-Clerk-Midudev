@@ -183,7 +183,7 @@ export default function HackatonId() {
 
                     <section className="w-full mt-6 flex gap-5 flex-col">
                         <p className="xl:text-3xl text-lg text-blue-300">Instrucciones</p>
-                        <p style={{ whiteSpace: 'pre-line' }} className='break-words break-all line-clamp-2'>{instrucciones}</p>
+                        <p style={{ whiteSpace: 'pre-line' }} className=''>{instrucciones}</p>
                     </section>
 
                     <section className="w-full mt-6 flex gap-5 flex-col">

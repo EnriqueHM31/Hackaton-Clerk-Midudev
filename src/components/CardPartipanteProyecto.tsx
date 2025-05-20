@@ -100,12 +100,12 @@ export default function CardPartipanteProyecto({ selected, setSelected, formatea
                             <span className="text-md xl:text-2xl text-pink-400">Repositorio</span>
                             <span className="text-md xl:text-2xl text-slate-500">&gt;</span><br />
                             <a
-                                href={selected.github_perfil}
+                                href={selected.repositorio}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="relative inline-block px-1 before:absolute before:-inset-0.5 before:block before:rounded before:bg-blue-500/10"
                             >
-                                <span className="text-md xl:text-2xl relative text-blue-400 hover:text-white break-words break-all">&nbsp;&nbsp;&nbsp;{selected.github_perfil}</span>
+                                <span className="text-md xl:text-2xl relative text-blue-400 hover:text-white break-words break-all">&nbsp;&nbsp;&nbsp;{selected.repositorio}</span>
                             </a><br />
                             <span className="text-md xl:text-2xl text-slate-500">&nbsp;&lt;/</span>
                             <span className="text-md xl:text-2xl text-pink-400">Repositorio</span>
