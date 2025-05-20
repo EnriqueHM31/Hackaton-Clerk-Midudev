@@ -1,4 +1,4 @@
-import LOGO from '../assets/images/logo.webp';
+import LOGO from '../assets/logo.webp';
 type WelcomeModalProps = {
     role?: string | null;
     onClose: () => void;
