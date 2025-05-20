@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 interface Participacion {
@@ -109,6 +110,20 @@ export default function ParticipantesMisHacks() {
         return fecha.toLocaleDateString("es-ES");
     }
 
+    const copiarEmail = (correo: string) => {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(correo)
+                .then(() => {
+                    toast.success("Correo copiado");
+                })
+                .catch(() => {
+                    toast.error("Error al copiar correo");
+                });
+        } else {
+            toast.error("No se pudo copiar correo");
+        }
+    };
+
     return (
         <section className="flex flex-col items-center justify-center gap-6 w-full">
             <h2 className="text-center text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-pink-400 to-secondary">
@@ -127,18 +142,18 @@ export default function ParticipantesMisHacks() {
                                 className={`shadow-lg bg-black border rounded-2xl p-6 hover:shadow-lg z-50 flex flex-col gap-4 relative justify-start transition-all duration-300 min-h-80 max-h-80 ${colores.contenedor
                                     } border-${colores.texto.split("-")[1]}-400`}
                             >
-                                <p className={`text-3xl font-bold break-words break-all ${colores.texto}`}>
+                                <p className={`text-3xl font-bold break-words break-all line-clamp-1 ${colores.texto}`}>
                                     Proyecto {p.nombre_proyecto}
                                 </p>
-                                <p className="text-white text-md break-words break-all">
+                                <p className="text-white text-md break-words break-all line-clamp-1">
                                     <strong className={`${colores.texto}`}>Usuario: </strong>
                                     {p.username}
                                 </p>
-                                <p className="text-white text-md break-words break-all">
+                                <p className="text-white text-md break-words break-all line-clamp-1">
                                     <strong className={`${colores.texto}`}>Repositorio: </strong>
                                     {p.repositorio}
                                 </p>
-                                <p className="text-white text-md break-words break-all">
+                                <p className="text-white text-md break-words break-all line-clamp-1">
                                     <strong className={`${colores.texto}`}>Participaste:</strong>{" "}
                                     {fecha(new Date(p.joined_at))}
                                 </p>
@@ -156,13 +171,12 @@ export default function ParticipantesMisHacks() {
                                             <>
 
                                                 <p>¡Ya ganaste este hackatón! 🎉</p>
-                                                <a
-                                                    href={`mailto:${p.correo}`}
+                                                <div
                                                     className="text-sm hover:underline hover:text-pink-300"
-                                                    onClick={(e) => e.stopPropagation()} // También evita propagación en el clic
+                                                    onClick={() => copiarEmail(p.correo ?? "")} // También evita propagación en el clic
                                                 >
-                                                    Contactar por correo
-                                                </a>
+                                                    {p.correo}
+                                                </div>
                                             </>
 
                                         ) : (

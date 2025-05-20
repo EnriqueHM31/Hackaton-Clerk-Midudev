@@ -84,7 +84,7 @@ const HackatonList = () => {
                                 )}
                             </div>
                             <div className="h-full w-full flex justify-between flex-col min-h-36 gap-3 z-50">
-                                <p className="text-green-400 text-3xl font-bold break-words break-all">{nombre}</p>
+                                <p className="text-green-400 text-3xl font-bold line-clamp-2 break-words break-all">{nombre}</p>
                                 <p className="text-white z-50 text-wrap w-full break-words break-all">
                                     Del{' '}
                                     {new Date(start_date).toLocaleDateString('es-ES', {

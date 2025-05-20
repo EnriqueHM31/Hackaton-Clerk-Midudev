@@ -25,6 +25,14 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (hackaton?.descripcion && hackaton?.descripcion.length <= 100) {
+            setExpandedDesc(true); // Mostrar todo si es corto
+        } else {
+            setExpandedDesc(false); // Mostrar recortado si es largo
+        }
+    }, [hackaton?.descripcion]);
+
+    useEffect(() => {
         if (!id) return;
 
         const fetchHackaton = async () => {
@@ -94,7 +102,7 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
 
     return (
         <>
-            <div className="relative p-4 rounded-xl w-full my-4 z-50 flex gap-5 text-white">
+            <div className="relative p-4 rounded-xl w-full my-4 z-50 flex gap-5 text-white max-w-full">
                 <div className="flex-1 w-full">
                     <img
                         src={hackaton.imagen}
@@ -102,11 +110,11 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
                         className="w-full h-full object-cover rounded-md mb-4"
                     />
                 </div>
-                <div className="flex-2 flex flex-col gap-4 w-full">
+                <div className="flex-2 flex flex-col gap-4 w-full max-w-4/6">
                     <div className="flex gap-3 items-center justify-between">
-                        <div className="flex gap-3 items-center">
+                        <div className="flex gap-3 items-center w-full max-w-2/3">
                             <span className="text-secondary font-bold text-xl ">Nombre: </span>
-                            <h2 className="text-lg font-bold  break-words break-all">{hackaton.nombre}</h2>
+                            <h2 className="text-lg font-bold  break-words break-all line-clamp-1 max-w-2/3 w-full">{hackaton.nombre}</h2>
                         </div>
                         <button
                             onClick={() => setShowModal(true)}
@@ -156,20 +164,20 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
                     </div>
 
                     <div className="flex gap-4 py-1 flex-col">
-                        <span className="text-secondary font-bold text-xl ">Descripción: </span>
-                        <p className="text-lg font-bold ">
+                        <span className="text-secondary font-bold text-xl">Descripción:</span>
+                        <p className="text-lg font-bold break-words break-all">
                             {expandedDesc
                                 ? hackaton.descripcion
-                                : hackaton.descripcion.length > 150
-                                    ? hackaton.descripcion.slice(0, 150) + '...'
+                                : hackaton.descripcion.length > 100
+                                    ? hackaton.descripcion.slice(0, 100) + "..."
                                     : hackaton.descripcion}
                         </p>
-                        {hackaton.descripcion.length > 150 && (
+                        {hackaton.descripcion.length > 100 && (
                             <button
                                 onClick={() => setExpandedDesc(!expandedDesc)}
                                 className="text-blue-500 hover:underline mt-1 self-start"
                             >
-                                {expandedDesc ? 'Ver menos' : 'Ver más'}
+                                {expandedDesc ? "Ver menos" : "Ver más"}
                             </button>
                         )}
                     </div>

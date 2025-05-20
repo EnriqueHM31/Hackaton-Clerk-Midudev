@@ -223,7 +223,7 @@ export default function HackatonesList() {
                                 </div>
 
                                 <div className="h-full flex justify-start flex-col gap-3 z-50 min-h-[180px]">
-                                    <p className="text-green-400 text-3xl font-bold text-wrap"> {nombre}</p>
+                                    <p className="text-green-400 text-3xl font-bold text-wrap break-words break-all line-clamp-1"> {nombre}</p>
                                     <p className="text-white z-50 text-wrap w-full">
                                         Del{' '}
                                         {start_date

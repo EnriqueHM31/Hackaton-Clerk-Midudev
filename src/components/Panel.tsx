@@ -13,8 +13,7 @@ export default function HackathonForm() {
     const preset_name = import.meta.env.VITE_CLOUD_PRESENT;
     const cloud_name = import.meta.env.VITE_CLOUD_NAME;
 
-
-    const [formData, setFormData] = useState({
+    const InicialData = {
         nombre: '',
         descripcion: '',
         startDate: '',
@@ -24,10 +23,13 @@ export default function HackathonForm() {
         lenguajes: ['JavaScript', 'Python'],
         premios: [] as string[],
         sitio: '',
-    });
+    }
+
+    const [formData, setFormData] = useState(InicialData);
 
     const [showModal, setShowModal] = useState(false);
     const [showPremiosModal, setShowPremiosModal] = useState(false);
+    const [fileImagen, setFileImagen] = useState("Seleccionar imagen");
 
     const fecha = useMemo(() => {
         return formData.startDate || formData.endDate
@@ -78,6 +80,7 @@ export default function HackathonForm() {
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
+        setFileImagen(file?.name || "Seleccionar imagen");
         setFormData((prev) => ({ ...prev, imagen: file }));
     };
 
@@ -133,7 +136,8 @@ export default function HackathonForm() {
                 const data = await res.json();
                 throw new Error(`Error al registrar: datos: ${data.message}`);
             }
-
+            setFileImagen("Seleccionar imagen");
+            setFormData(InicialData);
             toast.success('Se ha creado el hackathon correctamente');
         } catch (error) {
             console.error(error);
@@ -250,6 +254,7 @@ export default function HackathonForm() {
                                 type="file"
                                 accept="image/*"
                                 className="hidden"
+                                name='image'
                                 onChange={(e) => handleImage(e)}
                             />
                             <button
@@ -257,7 +262,7 @@ export default function HackathonForm() {
                                 onClick={() => document.getElementById('picture')?.click()}
                                 className="flex h-10 w-full rounded-md border border-secondary bg-black px-3 py-2 text-sm text-white text-center items-center justify-center"
                             >
-                                Seleccionar imagen
+                                {fileImagen}
                             </button>
                         </div>
 

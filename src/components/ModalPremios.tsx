@@ -50,6 +50,7 @@ export default function ModalPremios({ premios, handleClose, setPremios }: Modal
                 {inputs.map((premio, index) => (
                     <div key={index} className="flex items-center gap-2">
                         <input
+                            name='premio'
                             type="text"
                             value={premio}
                             onChange={(e) => handleInputChange(index, e.target.value)}
@@ -75,7 +76,8 @@ export default function ModalPremios({ premios, handleClose, setPremios }: Modal
                     </button>
                     <div className="space-x-2">
                         <button
-                            type="button"
+                            name='guardar'
+                            type="submit"
                             onClick={handleSave}
                             className="bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded"
                         >

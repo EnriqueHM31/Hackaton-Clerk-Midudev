@@ -36,7 +36,7 @@ export default function PreviewCard({
     }, [imagen]);
 
     return (
-        <div className="flex-1 bg-black z-50 p-5 rounded-2xl h-fit">
+        <div className="flex-1 bg-black z-50 p-5 rounded-2xl h-fit max-w-1/2">
             <h2 className="text-2xl font-bold text-green-400">Previsualización</h2>
             <div className="bg-black p-6 rounded-lg w-full font-mono shadow-xl z-50 ">
                 <div className="flex justify-between items-center bg-black z-50">
@@ -65,10 +65,10 @@ export default function PreviewCard({
                     </div>
 
                     <div className="h-full flex justify-between flex-col min-h-36 gap-3">
-                        <p className="text-green-400 text-3xl font-bold">{nombre || 'Nombre del Hackathon'}</p>
-                        <p className="text-white">{fecha}</p>
+                        <p className="text-green-400 text-3xl font-bold break-words break-all">{nombre || 'Nombre del Hackathon'}</p>
+                        <p className="text-white break-words break-all">{fecha}</p>
                         <p className="text-green-400 font-bold">{lenguajes.join(', ')}</p>
-                        <p className="text-white line-clamp-2">
+                        <p className="text-white line-clamp-2 break-words break-all">
                             {descripcion || 'Descripción del hackathon...'}
                         </p>
                     </div>
