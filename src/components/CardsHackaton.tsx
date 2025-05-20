@@ -192,9 +192,9 @@ export default function HackatonesList() {
                         <Link
                             to={`/hackaton/${id}`}
                             key={id}
-                            className="bg-black text-white p-6 rounded-lg w-full max-w-lg font-mono card-animada shadow-xl hover:shadow-purple-600 transition-colors duration-200 z-50"
+                            className=" text-white rounded-2xl w-full max-w-lg font-mono card-animada shadow-xl hover:shadow-purple-500 transition-colors duration-200 z-50 px-8 bg-black"
                         >
-                            <div className="flex justify-between items-center z-50">
+                            <div className="flex justify-between items-center z-50 mt-6">
                                 <div className="flex space-x-2 text-red-500">
                                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
                                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -203,7 +203,7 @@ export default function HackatonesList() {
                                 <p className="text-sm">bash</p>
                             </div>
 
-                            <div className="mt-4 flex flex-col justify-between min-h-42 gap-3 z-50">
+                            <div className="flex flex-col justify-between min-h-42 gap-3 z-50">
                                 <div className="flex w-full justify-between items-center aspect-square max-h-56 py-1 relative">
                                     <div className="absolute w-full h-full bg-gradient-to-b from-black/50 via-transparent to-black/50 z-0"></div>
                                     {imagen ? (
@@ -246,10 +246,10 @@ export default function HackatonesList() {
                                     <p className="text-white line-clamp-2 text-wrap">{descripcion}</p>
                                 </div>
 
-                                <div className="relative group flex items-center justify-center mt-6">
+                                <div className="relative group flex items-center justify-center mb-10 ">
                                     <button
                                         disabled={yaFinalizado}
-                                        className={`relative inline-block p-px font-semibold leading-6 text-white shadow-2xl rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out ${estadoClase}`}
+                                        className={`relative inline-block p-px font-semibold leading-6 text-white shadow-2xl rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out${estadoClase}`}
 
                                     >
                                         <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-teal-400 via-blue-500 to-purple-500 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
