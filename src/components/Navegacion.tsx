@@ -143,7 +143,7 @@ export default function Navegacion() {
                         id="menu-button"
                     >
                         <img
-                            src="/src/assets/menu.webp"
+                            src={ICONOMENU}
                             alt="Icono de menú"
                             className="w-full h-full object-contain"
                         />
