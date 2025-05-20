@@ -14,6 +14,7 @@ interface Participacion {
 }
 
 export default function ModalGanadorHackaton({ user_id, idHack, lugar, }: { user_id: string; idHack: number; lugar: number; }) {
+    const API = import.meta.env.VITE_API_URL;
 
     const [ganadoresBD, setGanadoresBD] = useState<Participacion[]>([]);
     const [modalOpen, setModalOpen] = useState(false);
@@ -21,7 +22,7 @@ export default function ModalGanadorHackaton({ user_id, idHack, lugar, }: { user
     useEffect(() => {
         const fetchGanadores = async () => {
             try {
-                const res = await fetch(`http://localhost:3000/api/hackatones/participaciones?idHack=${idHack}&idUser=${user_id}`
+                const res = await fetch(`${API}/api/hackatones/participaciones?idHack=${idHack}&idUser=${user_id}`
                 );
                 const data = await res.json();
 

@@ -1,5 +1,3 @@
-'use client';
-
 type WelcomeModalProps = {
     role?: string | null;
     onClose: () => void;

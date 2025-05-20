@@ -1,4 +1,3 @@
-'use client';
 interface Participante {
     id: number;
     user_id: string;

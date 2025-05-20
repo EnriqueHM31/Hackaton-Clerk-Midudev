@@ -1,22 +1,13 @@
-'use client';
+
 import React, { useState, useMemo } from 'react';
 import PreviewCard from './CarPrev';
 import ModalLenguajes from './ModalLenguajes';
 import ModalPremios from './ModalPremios';
 import toast from 'react-hot-toast';
 import { useUser } from '@clerk/clerk-react';
-/*
-interface Participacion {
-    id: number;
-    user_id: string;
-    username: string;
-    nombre_proyecto: string;
-    github_perfil: string;
-    repositorio: string;
-    joined_at: string;
-}*/
 
 export default function HackathonForm() {
+    const API = import.meta.env.VITE_API_URL;
     const { user } = useUser();
     const id_usuario = user?.id;
     const preset_name = "DevArena"
@@ -130,7 +121,7 @@ export default function HackathonForm() {
 
 
         try {
-            const res = await fetch('http://localhost:3000/api/hackatones/register', {
+            const res = await fetch(`${API}/api/hackatones/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

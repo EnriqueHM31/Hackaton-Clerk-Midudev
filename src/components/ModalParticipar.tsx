@@ -11,9 +11,10 @@ interface Props {
 
 export default function FormularioParticipacion({ idHack: id_hackaton, date_end }: Props) {
 
-    const user = useUser();
-    const id_usuario = user?.user?.id;
-    const username = user?.user?.username;
+    const API = import.meta.env.VITE_API_URL;
+    const { user } = useUser();
+    const id_usuario = user?.id;
+    const username = user?.username;
     const [abierto, setAbierto] = useState(false);
     const [loading, setLoading] = useState(false);
     const [disabled, setDisabled] = useState(false);
@@ -24,7 +25,7 @@ export default function FormularioParticipacion({ idHack: id_hackaton, date_end 
         const fetchParticipantes = async () => {
             try {
                 const res = await fetch(
-                    `http://localhost:3000/api/hackatones/participaciones?idHack=${id_hackaton}&idUser=${id_usuario}`
+                    `${API}/api/hackatones/participaciones?idHack=${id_hackaton}&idUser=${id_usuario}`
                 )
 
                 if (res.ok) {
@@ -70,7 +71,7 @@ export default function FormularioParticipacion({ idHack: id_hackaton, date_end 
         setLoading(true);
 
         try {
-            const res = await fetch('http://localhost:3000/api/hackatones/participaciones', {
+            const res = await fetch(`${API}/api/hackatones/participaciones`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(participacion),

@@ -18,6 +18,7 @@ type Props = {
 };
 
 const SettingsHack = ({ id: id, onDeleted }: Props) => {
+    const API = import.meta.env.VITE_API_URL;
     const [showModal, setShowModal] = useState(false);
     const [expandedDesc, setExpandedDesc] = useState(false);
     const [hackaton, setHackaton] = useState<Hackaton | null>(null);
@@ -29,7 +30,7 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
         const fetchHackaton = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`http://localhost:3000/api/hackatones/hackaton/${id}`);
+                const res = await fetch(`${API}/api/hackatones/hackaton/${id}`);
                 const data = await res.json();
 
 
@@ -59,7 +60,7 @@ const SettingsHack = ({ id: id, onDeleted }: Props) => {
         if (!hackaton) return;
 
         try {
-            const res = await fetch(`http://localhost:3000/api/hackatones/eliminar/hackaton?id=${hackaton.id}`, {
+            const res = await fetch(`${API}/api/hackatones/eliminar/hackaton?id=${hackaton.id}`, {
                 method: 'DELETE',
             });
 

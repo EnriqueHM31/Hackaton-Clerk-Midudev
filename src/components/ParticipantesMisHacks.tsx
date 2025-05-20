@@ -27,6 +27,7 @@ interface ParticipacionExtendida extends Participacion {
 }
 
 export default function ParticipantesMisHacks() {
+    const API = import.meta.env.VITE_API_URL;
     const { user } = useUser();
     const [participaciones, setParticipaciones] = useState<Participacion[]>([]);
     const id_usuario = user?.id;
@@ -36,10 +37,10 @@ export default function ParticipantesMisHacks() {
             try {
                 const [participacionesResp, ganadosResp] = await Promise.all([
                     fetch(
-                        `http://localhost:3000/api/hackatones/participaciones/idusuario?idUser=${id_usuario}`
+                        `${API}/api/hackatones/participaciones/idusuario?idUser=${id_usuario}`
                     ),
                     fetch(
-                        `http://localhost:3000/api/hackatones/ganados/idusuario?idUser=${id_usuario}`
+                        `${API}/api/hackatones/ganados/idusuario?idUser=${id_usuario}`
                     ),
                 ]);
 
@@ -58,7 +59,7 @@ export default function ParticipantesMisHacks() {
                         if (gano) {
                             try {
                                 const correoResp = await fetch(
-                                    `http://localhost:3000/api/users/correo/${p.hackathon_id}`
+                                    `${API}/api/users/correo/${p.hackathon_id}`
                                 );
                                 const correoData = await correoResp.json();
                                 correo = correoData.email;

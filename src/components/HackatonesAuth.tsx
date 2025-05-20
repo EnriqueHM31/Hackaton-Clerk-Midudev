@@ -15,6 +15,7 @@ interface HackatonProps {
 }
 
 const HackatonList = () => {
+    const API = import.meta.env.VITE_API_URL;
     const { user } = useUser();
     const userId = user?.id || '';
     const [visibleCount, setVisibleCount] = useState(6);
@@ -22,7 +23,7 @@ const HackatonList = () => {
 
     useEffect(() => {
         const fetchHackatones = async () => {
-            const res = await fetch(`http://localhost:3000/api/hackatones/autor?userId=${userId}`);
+            const res = await fetch(`${API}/api/hackatones/autor?userId=${userId}`);
             const data = await res.json();
 
             if (!res.ok) {
@@ -53,11 +54,7 @@ const HackatonList = () => {
         setVisibleCount((prev) => Math.min(prev + 6, hackatones.length));
     };
 
-
-
     return (
-
-
 
         <section className="grid_hackatones min-h-screen mb-10 z-50 w-full">
             {hackatonesVisibles.map(({ id, nombre, descripcion, start_date, end_date, lenguajes, imagen }) => (

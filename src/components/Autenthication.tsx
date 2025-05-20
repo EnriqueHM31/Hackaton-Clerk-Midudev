@@ -4,6 +4,8 @@ import ModalRol from './ModalRol';
 import WelcomeModal from './ModalWelcom';
 
 export default function AuthRolContenido() {
+
+    const API = import.meta.env.VITE_API_URL;
     const { isLoaded, user } = useUser();
     const [showModal, setShowModal] = useState(false);
     const [showWelcomeModal, setShowWelcomeModal] = useState(false);
@@ -24,7 +26,7 @@ export default function AuthRolContenido() {
 
         const handleAuthFlow = async () => {
             try {
-                const registerRes = await fetch('http://localhost:3000/api/users', {
+                const registerRes = await fetch(`${API}/api/users`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

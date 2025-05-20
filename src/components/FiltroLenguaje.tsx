@@ -1,5 +1,5 @@
-'use client';
-import { lenguajesSelect } from '../../assets/js/constantes';
+
+import { lenguajesSelect } from '../assets/js/constantes';
 
 interface FiltroLenguajesProps {
     onFiltrar: (lenguaje: string) => void;

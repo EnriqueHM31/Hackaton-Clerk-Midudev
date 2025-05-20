@@ -1,5 +1,3 @@
-'use client';
-
 import { useState, useEffect } from 'react';
 import { lenguajesSelect } from '../assets/js/constantes';
 import toast from 'react-hot-toast';
@@ -37,12 +35,13 @@ export default function HackatonesList() {
     const [hackatones, setHackatones] = useState([] as Hackaton[]);
 
     useEffect(() => {
+        const API = import.meta.env.VITE_API_URL;
         const fetchData = async () => {
             try {
                 const [resParticipaciones, resHackatones, resGanadores] = await Promise.all([
-                    fetch(`http://localhost:3000/api/hackatones/participaciones/idusuario?idUser=${id_usuario}`),
-                    fetch(`http://localhost:3000/api/hackatones/all`),
-                    fetch(`http://localhost:3000/api/hackatones/ganadores/existen/all`),
+                    fetch(`${API}/api/hackatones/participaciones/idusuario?idUser=${id_usuario}`),
+                    fetch(`${API}/api/hackatones/all`),
+                    fetch(`${API}/api/hackatones/ganadores/existen/all`),
 
 
                 ]);

@@ -38,6 +38,7 @@ type Props = {
 };
 
 export default function ParticipantesHackaton({ idHack }: Props) {
+    const API = import.meta.env.VITE_API_URL;
     const { user } = useUser();
     const userId = user?.id || '';
 
@@ -58,9 +59,9 @@ export default function ParticipantesHackaton({ idHack }: Props) {
             setLoading(true);
             try {
                 const [resHackaton, resParticipantes, resGanadores] = await Promise.all([
-                    fetch(`http://localhost:3000/api/hackatones/hackaton/${idHack}`),
-                    fetch(`http://localhost:3000/api/hackatones/participaciones/${idHack}`),
-                    fetch(`http://localhost:3000/api/hackatones/ganadores/${idHack}`)
+                    fetch(`${API}/api/hackatones/hackaton/${idHack}`),
+                    fetch(`${API}/api/hackatones/participaciones/${idHack}`),
+                    fetch(`${API}/api/hackatones/ganadores/${idHack}`)
                 ]);
 
                 const [dataHackaton, dataParticipantes, dataGanadores] = await Promise.all([
@@ -193,7 +194,7 @@ export default function ParticipantesHackaton({ idHack }: Props) {
         };
 
         try {
-            const res = await fetch(`http://localhost:3000/api/hackatones/ganadores/register`, {
+            const res = await fetch(`${API}/api/hackatones/ganadores/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

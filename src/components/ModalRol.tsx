@@ -7,13 +7,14 @@ type Props = {
 };
 
 export default function AssignRoleModal({ userId, onRoleAssigned }: Props) {
+    const API = import.meta.env.VITE_API_URL;
     const [role, setRole] = useState('participante');
     const [loading, setLoading] = useState(false);
 
     const assignRole = async () => {
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:3000/api/roles', {
+            const res = await fetch(`${API}/api/roles`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ role, userId }),

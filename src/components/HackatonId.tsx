@@ -26,6 +26,7 @@ interface Ganador {
 
 
 export default function HackatonId() {
+    const API = import.meta.env.VITE_API_URL;
     const { id: idHack } = useParams<{ id: string }>();
     const [Hackaton, setHackaton] = useState<Hackaton>();
     const [isLoading, setIsLoading] = useState(true);
@@ -39,8 +40,8 @@ export default function HackatonId() {
         const fetchDatosHackaton = async () => {
             try {
                 const [resHackaton, resGanadores] = await Promise.all([
-                    fetch(`http://localhost:3000/api/hackatones/hackaton/${idHack}`),
-                    fetch(`http://localhost:3000/api/hackatones/ganadores/${idHack}`),
+                    fetch(`${API}/api/hackatones/hackaton/${idHack}`),
+                    fetch(`${API}/api/hackatones/ganadores/${idHack}`),
 
                 ]);
 

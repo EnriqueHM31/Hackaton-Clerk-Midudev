@@ -12,6 +12,7 @@ import HackatonesAutor from './components/HackatonesAutor.js';
 import HackatonAutor from './components/HackatonAutorId.js';
 import { Toaster } from 'react-hot-toast';
 
+
 function App() {
   return (
     <BrowserRouter>
