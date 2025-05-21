@@ -60,6 +60,6 @@ Implementacion de [Clerk](https://clerk.dev/) para acceso seguro:
 
 ## 🔗 Proyecto en producción
 
-🌐 [https://hackaton-clerk-midudev.vercel.app/](https://hackaton-clerk-midudev.vercel.app/)
+🌐 [https://hackaton-clerk.vercel.app/](https://hackaton-clerk.vercel.app/)
 
 ---
